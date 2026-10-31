@@ -1,0 +1,258 @@
+{
+  "assumptions": {
+    "user_85kg_system_mass": 104.1,
+    "user_100kg_system_mass": 119.1,
+    "crutch_support_walk": 0.25,
+    "crutch_support_sts": 0.3,
+    "sts_arm_push_extra": 0.15,
+    "crutch_force_applied": "vertical, through the HAT centre of mass",
+    "gait": {
+      "step_length": 0.38,
+      "step_time": 1.5,
+      "speed_m_s": 0.253
+    }
+  },
+  "joint_demands": {
+    "85kg": {
+      "walk": {
+        "hip": {
+          "peak_torque_Nm": 51.9,
+          "rms_torque_Nm": 25.1,
+          "peak_speed_rad_s": 2.01,
+          "peak_power_W": 55.5,
+          "peak_regen_W": 45.1
+        },
+        "knee": {
+          "peak_torque_Nm": 98.1,
+          "rms_torque_Nm": 30.6,
+          "peak_speed_rad_s": 2.95,
+          "peak_power_W": 25.0,
+          "peak_regen_W": 54.3
+        },
+        "peak_ankle_moment_Nm": 174.2,
+        "peak_crutch_load_N": 247.4
+      },
+      "sit_to_stand": {
+        "hip": {
+          "peak_torque_Nm": 75.4,
+          "rms_torque_Nm": 23.1,
+          "peak_speed_rad_s": 2.4,
+          "peak_power_W": 94.1,
+          "peak_regen_W": 30.9
+        },
+        "knee": {
+          "peak_torque_Nm": 101.8,
+          "rms_torque_Nm": 33.3,
+          "peak_speed_rad_s": 2.08,
+          "peak_power_W": 131.0,
+          "peak_regen_W": 0.7
+        },
+        "peak_ankle_moment_Nm": 77.2,
+        "peak_crutch_load_N": 365.9
+      },
+      "stand_to_sit": {
+        "hip": {
+          "peak_torque_Nm": 68.9,
+          "rms_torque_Nm": 21.6,
+          "peak_speed_rad_s": 2.02,
+          "peak_power_W": 26.7,
+          "peak_regen_W": 71.7
+        },
+        "knee": {
+          "peak_torque_Nm": 97.8,
+          "rms_torque_Nm": 33.4,
+          "peak_speed_rad_s": 1.75,
+          "peak_power_W": 0.9,
+          "peak_regen_W": 103.1
+        },
+        "peak_ankle_moment_Nm": 76.0,
+        "peak_crutch_load_N": 351.8
+      }
+    },
+    "100kg": {
+      "walk": {
+        "hip": {
+          "peak_torque_Nm": 59.9,
+          "rms_torque_Nm": 29.0,
+          "peak_speed_rad_s": 2.01,
+          "peak_power_W": 62.2,
+          "peak_regen_W": 50.6
+        },
+        "knee": {
+          "peak_torque_Nm": 111.4,
+          "rms_torque_Nm": 34.6,
+          "peak_speed_rad_s": 2.95,
+          "peak_power_W": 29.4,
+          "peak_regen_W": 60.5
+        },
+        "peak_ankle_moment_Nm": 200.3,
+        "peak_crutch_load_N": 283.4
+      },
+      "sit_to_stand": {
+        "hip": {
+          "peak_torque_Nm": 88.5,
+          "rms_torque_Nm": 27.4,
+          "peak_speed_rad_s": 2.4,
+          "peak_power_W": 110.5,
+          "peak_regen_W": 36.6
+        },
+        "knee": {
+          "peak_torque_Nm": 116.2,
+          "rms_torque_Nm": 38.0,
+          "peak_speed_rad_s": 2.08,
+          "peak_power_W": 149.2,
+          "peak_regen_W": 0.8
+        },
+        "peak_ankle_moment_Nm": 91.0,
+        "peak_crutch_load_N": 421.4
+      },
+      "stand_to_sit": {
+        "hip": {
+          "peak_torque_Nm": 80.8,
+          "rms_torque_Nm": 25.6,
+          "peak_speed_rad_s": 2.02,
+          "peak_power_W": 31.7,
+          "peak_regen_W": 84.2
+        },
+        "knee": {
+          "peak_torque_Nm": 111.7,
+          "rms_torque_Nm": 38.2,
+          "peak_speed_rad_s": 1.75,
+          "peak_power_W": 1.0,
+          "peak_regen_W": 117.3
+        },
+        "peak_ankle_moment_Nm": 89.6,
+        "peak_crutch_load_N": 405.1
+      }
+    }
+  },
+  "envelope": {
+    "full 54.6 V": {
+      "speed_rad_s": [
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "max_torque_Nm": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "no_load_speed_rad_s": 5.25
+    },
+    "nominal 46.8 V": {
+      "speed_rad_s": [
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "max_torque_Nm": [
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "no_load_speed_rad_s": 4.5
+    },
+    "low 40.0 V": {
+      "speed_rad_s": [
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "max_torque_Nm": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        -211.0
+      ],
+      "no_load_speed_rad_s": 3.85
+    }
+  },
+  "thermal_walking": {
+    "iq_rms_A": [
+      2.81,
+      2.09,
+      2.81,
+      2.09
+    ],
+    "winding_steady_state_C": [
+      36.9,
+      36.0,
+      36.9,
+      36.0
+    ],
+    "limit_C": 120.0
+  },
+  "battery": {
+    "pack": "13S2P",
+    "energy_Wh": 468.0,
+    "usable_Wh": 421.2,
+    "walking_bus_power_W": 55.4,
+    "walking_bus_power_no_regen_W": 58.7,
+    "continuous_walking_runtime_h": 7.6,
+    "distance_per_charge_km": 6.93
+  },
+  "sts_knee_peak_without_arm_push_Nm": 116.3,
+  "margins": [
+    {
+      "item": "hip peak torque 85 kg vs software limit 100 N m",
+      "demand": 75.4,
+      "capacity": 100.0,
+      "margin": 0.326
+    },
+    {
+      "item": "hip peak torque 100 kg vs software limit",
+      "demand": 88.5,
+      "capacity": 100.0,
+      "margin": 0.13
+    },
+    {
+      "item": "hip peak speed vs no-load speed @ 40 V",
+      "demand": 2.4,
+      "capacity": 3.85,
+      "margin": 0.604
+    },
+    {
+      "item": "knee peak torque 85 kg vs software limit 100 N m",
+      "demand": 101.8,
+      "capacity": 100.0,
+      "margin": -0.018
+    },
+    {
+      "item": "knee peak torque 100 kg vs software limit",
+      "demand": 116.2,
+      "capacity": 100.0,
+      "margin": -0.139
+    },
+    {
+      "item": "knee peak speed vs no-load speed @ 40 V",
+      "demand": 2.95,
+      "capacity": 3.85,
+      "margin": 0.305
+    },
+    {
+      "item": "hip RMS current (steady walking) vs continuous 7.0 A",
+      "demand": 2.81,
+      "capacity": 7.0,
+      "margin": 1.487
+    },
+    {
+      "item": "knee RMS current (steady walking) vs continuous 7.0 A",
+      "demand": 2.09,
+      "capacity": 7.0,
+      "margin": 2.35
+    }
+  ],
+  "sts_knee_peak_with_arm_push_Nm": 101.8
+}

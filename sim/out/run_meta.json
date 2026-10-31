@@ -1,0 +1,200 @@
+{
+  "scenario": "sit -> stand -> walk -> stop -> sit, BCI-commanded with crutch-button confirmation",
+  "duration_s": 40.61,
+  "steps_walked": 8,
+  "distance_m": 2.66,
+  "chairs_x": [
+    -0.36,
+    2.3
+  ],
+  "user": {
+    "height_m": 1.8,
+    "mass_kg": 85.0,
+    "system_mass_kg": 104.1
+  },
+  "state_timeline": [
+    [
+      0.0,
+      "SITTING"
+    ],
+    [
+      6.96,
+      "STANDING_UP"
+    ],
+    [
+      9.95,
+      "STANDING"
+    ],
+    [
+      16.32,
+      "WALKING"
+    ],
+    [
+      26.73,
+      "STOPPING"
+    ],
+    [
+      29.12,
+      "STANDING"
+    ],
+    [
+      34.52,
+      "SITTING_DOWN"
+    ],
+    [
+      38.12,
+      "SITTING"
+    ]
+  ],
+  "peaks": {
+    "stand_up": {
+      "hip_L": {
+        "peak_torque_Nm": 81.3,
+        "peak_speed_rad_s": 2.4,
+        "max_track_err_deg": 0.09
+      },
+      "knee_L": {
+        "peak_torque_Nm": 100.0,
+        "peak_speed_rad_s": 2.09,
+        "max_track_err_deg": 0.2
+      },
+      "hip_R": {
+        "peak_torque_Nm": 81.3,
+        "peak_speed_rad_s": 2.4,
+        "max_track_err_deg": 0.09
+      },
+      "knee_R": {
+        "peak_torque_Nm": 100.0,
+        "peak_speed_rad_s": 2.09,
+        "max_track_err_deg": 0.2
+      }
+    },
+    "walk": {
+      "hip_L": {
+        "peak_torque_Nm": 48.1,
+        "peak_speed_rad_s": 2.01,
+        "max_track_err_deg": 0.08
+      },
+      "knee_L": {
+        "peak_torque_Nm": 84.5,
+        "peak_speed_rad_s": 2.95,
+        "max_track_err_deg": 0.09
+      },
+      "hip_R": {
+        "peak_torque_Nm": 47.9,
+        "peak_speed_rad_s": 2.01,
+        "max_track_err_deg": 0.08
+      },
+      "knee_R": {
+        "peak_torque_Nm": 97.4,
+        "peak_speed_rad_s": 2.95,
+        "max_track_err_deg": 0.1
+      }
+    },
+    "sit_down": {
+      "hip_L": {
+        "peak_torque_Nm": 69.1,
+        "peak_speed_rad_s": 2.02,
+        "max_track_err_deg": 0.08
+      },
+      "knee_L": {
+        "peak_torque_Nm": 96.4,
+        "peak_speed_rad_s": 1.75,
+        "max_track_err_deg": 0.15
+      },
+      "hip_R": {
+        "peak_torque_Nm": 69.1,
+        "peak_speed_rad_s": 2.02,
+        "max_track_err_deg": 0.08
+      },
+      "knee_R": {
+        "peak_torque_Nm": 96.4,
+        "peak_speed_rad_s": 1.75,
+        "max_track_err_deg": 0.15
+      }
+    }
+  },
+  "saturation_time_s": {
+    "hip_L": {
+      "slew": 0.078
+    },
+    "knee_L": {
+      "software/gear peak": 0.058,
+      "slew": 0.086
+    },
+    "hip_R": {
+      "slew": 0.08
+    },
+    "knee_R": {
+      "software/gear peak": 0.058,
+      "slew": 0.085
+    }
+  },
+  "battery": {
+    "soc_start": 0.62,
+    "soc_end": 0.6187,
+    "v_bus_min": 47.61,
+    "v_bus_max": 49.94,
+    "energy_Wh": 0.62,
+    "chopper_used": false
+  },
+  "winding_temp_max_C": 43.0,
+  "bci": {
+    "calibration": {
+      "windows_train": 2501,
+      "windows_test": 1129,
+      "heldout_window_accuracy": 0.8529672276350753,
+      "confusion_rows_true_cols_pred": [
+        [
+          302,
+          75,
+          26
+        ],
+        [
+          42,
+          282,
+          0
+        ],
+        [
+          23,
+          0,
+          379
+        ]
+      ],
+      "classes": [
+        "REST",
+        "FEET_MI",
+        "HANDS_MI"
+      ],
+      "lda_shrinkage": 0.012763851352518828,
+      "chance": 0.3333333333333333
+    },
+    "false_activation": {
+      "seated": {
+        "minutes": 3.0,
+        "events": 0,
+        "per_minute": 0.0
+      },
+      "walking": {
+        "minutes": 2.0,
+        "events": 0,
+        "per_minute": 0.0
+      }
+    },
+    "detection_latency_s": [
+      3.3,
+      3.61,
+      4.7,
+      3.4
+    ],
+    "windows_rejected_frac": 0.073
+  },
+  "feet_check": {
+    "max_slip_m": 0.0011,
+    "max_sink_or_float_m": 0.0003
+  },
+  "ankle_moment_peak_Nm": 160.1,
+  "fault": null,
+  "events": 24,
+  "wall_time_s": 16.8
+}

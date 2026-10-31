@@ -1,0 +1,10 @@
+cadquery==2.8.0
+numpy
+scipy
+matplotlib
+pyvista
+pillow
+imageio
+imageio-ffmpeg
+trimesh
+fast-simplification

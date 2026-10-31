@@ -1,0 +1,3 @@
+# keep GitHub's language stats on the source, not the built site
+site/** linguist-generated
+docs/page_template.html linguist-documentation

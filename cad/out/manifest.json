@@ -1,0 +1,288 @@
+{
+  "materials": {
+    "carbon": {
+      "rgb": [
+        0.115,
+        0.118,
+        0.125
+      ],
+      "metallic": 0.55,
+      "roughness": 0.38
+    },
+    "alu": {
+      "rgb": [
+        0.78,
+        0.79,
+        0.81
+      ],
+      "metallic": 1.0,
+      "roughness": 0.24
+    },
+    "accent": {
+      "rgb": [
+        1.0,
+        0.42,
+        0.04
+      ],
+      "metallic": 0.1,
+      "roughness": 0.35
+    },
+    "shell": {
+      "rgb": [
+        0.945,
+        0.945,
+        0.95
+      ],
+      "metallic": 0.0,
+      "roughness": 0.32
+    },
+    "pad": {
+      "rgb": [
+        0.2,
+        0.205,
+        0.215
+      ],
+      "metallic": 0.0,
+      "roughness": 0.9
+    },
+    "rubber": {
+      "rgb": [
+        0.07,
+        0.07,
+        0.075
+      ],
+      "metallic": 0.0,
+      "roughness": 0.8
+    },
+    "fabric": {
+      "rgb": [
+        0.3,
+        0.305,
+        0.32
+      ],
+      "metallic": 0.0,
+      "roughness": 0.85
+    },
+    "led": {
+      "rgb": [
+        0.25,
+        0.78,
+        1.0
+      ],
+      "metallic": 0.0,
+      "roughness": 0.2
+    },
+    "estop": {
+      "rgb": [
+        0.9,
+        0.12,
+        0.1
+      ],
+      "metallic": 0.0,
+      "roughness": 0.35
+    },
+    "yellow": {
+      "rgb": [
+        0.96,
+        0.82,
+        0.2
+      ],
+      "metallic": 0.0,
+      "roughness": 0.45
+    },
+    "steel": {
+      "rgb": [
+        0.56,
+        0.575,
+        0.6
+      ],
+      "metallic": 1.0,
+      "roughness": 0.3
+    },
+    "copper": {
+      "rgb": [
+        0.85,
+        0.52,
+        0.3
+      ],
+      "metallic": 1.0,
+      "roughness": 0.3
+    },
+    "magnet": {
+      "rgb": [
+        0.3,
+        0.31,
+        0.335
+      ],
+      "metallic": 0.8,
+      "roughness": 0.4
+    },
+    "pcb": {
+      "rgb": [
+        0.09,
+        0.33,
+        0.2
+      ],
+      "metallic": 0.0,
+      "roughness": 0.5
+    },
+    "indicator": {
+      "rgb": [
+        1.0,
+        0.42,
+        0.04
+      ],
+      "metallic": 0.0,
+      "roughness": 0.3
+    }
+  },
+  "segments": {
+    "pelvis": {
+      "files": {
+        "alu": "pelvis__alu.stl",
+        "carbon": "pelvis__carbon.stl",
+        "accent": "pelvis__accent.stl",
+        "pad": "pelvis__pad.stl",
+        "shell": "pelvis__shell.stl",
+        "led": "pelvis__led.stl",
+        "yellow": "pelvis__yellow.stl",
+        "estop": "pelvis__estop.stl"
+      }
+    },
+    "thigh_L": {
+      "files": {
+        "alu": "thigh_L__alu.stl",
+        "steel": "thigh_L__steel.stl",
+        "indicator": "thigh_L__indicator.stl",
+        "carbon": "thigh_L__carbon.stl",
+        "rubber": "thigh_L__rubber.stl",
+        "accent": "thigh_L__accent.stl",
+        "shell": "thigh_L__shell.stl",
+        "pad": "thigh_L__pad.stl"
+      }
+    },
+    "shank_L": {
+      "files": {
+        "alu": "shank_L__alu.stl",
+        "steel": "shank_L__steel.stl",
+        "indicator": "shank_L__indicator.stl",
+        "carbon": "shank_L__carbon.stl",
+        "accent": "shank_L__accent.stl",
+        "shell": "shank_L__shell.stl",
+        "pad": "shank_L__pad.stl"
+      }
+    },
+    "foot_L": {
+      "files": {
+        "rubber": "foot_L__rubber.stl",
+        "carbon": "foot_L__carbon.stl",
+        "fabric": "foot_L__fabric.stl",
+        "pad": "foot_L__pad.stl",
+        "alu": "foot_L__alu.stl"
+      }
+    },
+    "thigh_R": {
+      "files": {
+        "alu": "thigh_R__alu.stl",
+        "steel": "thigh_R__steel.stl",
+        "indicator": "thigh_R__indicator.stl",
+        "carbon": "thigh_R__carbon.stl",
+        "rubber": "thigh_R__rubber.stl",
+        "accent": "thigh_R__accent.stl",
+        "shell": "thigh_R__shell.stl",
+        "pad": "thigh_R__pad.stl"
+      }
+    },
+    "shank_R": {
+      "files": {
+        "alu": "shank_R__alu.stl",
+        "steel": "shank_R__steel.stl",
+        "indicator": "shank_R__indicator.stl",
+        "carbon": "shank_R__carbon.stl",
+        "accent": "shank_R__accent.stl",
+        "shell": "shank_R__shell.stl",
+        "pad": "shank_R__pad.stl"
+      }
+    },
+    "foot_R": {
+      "files": {
+        "rubber": "foot_R__rubber.stl",
+        "carbon": "foot_R__carbon.stl",
+        "fabric": "foot_R__fabric.stl",
+        "pad": "foot_R__pad.stl",
+        "alu": "foot_R__alu.stl"
+      }
+    }
+  },
+  "geometry": {
+    "thigh_len": 0.441,
+    "shank_len": 0.4428,
+    "ankle_height": 0.0702,
+    "hip_height_standing": 0.954,
+    "segment_origins_standing": {
+      "pelvis": [
+        0,
+        0,
+        0.954
+      ],
+      "thigh_L": [
+        0,
+        0,
+        0.954
+      ],
+      "thigh_R": [
+        0,
+        0,
+        0.954
+      ],
+      "shank_L": [
+        0,
+        0,
+        0.5129999999999999
+      ],
+      "shank_R": [
+        0,
+        0,
+        0.5129999999999999
+      ],
+      "foot_L": [
+        0,
+        0,
+        0.0702
+      ],
+      "foot_R": [
+        0,
+        0,
+        0.0702
+      ]
+    },
+    "hip_act_y": 0.216,
+    "knee_act_y": 0.181,
+    "ankle_hinge_y": 0.14,
+    "hjc_y": 0.09
+  },
+  "actuator_components": [
+    "housing",
+    "housing_accent",
+    "rear_cover",
+    "motor_encoder_pcb",
+    "brake_coil",
+    "brake_armature",
+    "brake_friction_disc",
+    "stator",
+    "end_turns_rear",
+    "end_turns_front",
+    "rotor_magnets",
+    "rotor_hub",
+    "hollow_shaft",
+    "wave_generator",
+    "flexspline",
+    "circular_spline",
+    "xrb_outer",
+    "xrb_inner",
+    "torque_sensor_flexure",
+    "output_encoder_ring",
+    "output_flange",
+    "output_cap"
+  ]
+}

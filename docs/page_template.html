@@ -1,0 +1,981 @@
+<meta charset="utf-8">
+<title>Volition Exoskeleton</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: an Apple-style product page. Alternating black and light full-bleed bands, one idea per band,
+   a 1024px content column, bento tiles for numbers, a Tech Specs list near the end. Deliberately single-theme:
+   every band sets its own colours. */
+:root {
+  color-scheme: light;
+  --f: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --fd: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --fm: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  --blue: #0071e3;
+  --fg: #1d1d1f; --fg2: #6e6e73; --line: #d2d2d7; --card: #ffffff; --tile: #ffffff; --tile2: #f5f5f7;
+  --link: #0066cc; --acc: #e36600; --sig: #0071e3; --crit: #e30000; --ok: #248a3d;
+}
+html { scroll-behavior: smooth; }
+body { background: #000; color: var(--fg); font-family: var(--f); font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+
+.band { padding-block: clamp(72px, 11vw, 140px); }
+.band.dark { background: #000; color: #f5f5f7; --fg: #f5f5f7; --fg2: #86868b; --line: #424245; --card: #1d1d1f; --tile: #161617; --tile2: #1d1d1f;
+  --link: #2997ff; --acc: #ff9f0a; --sig: #64d2ff; --crit: #ff453a; --ok: #30d158; }
+.band.light { background: #f5f5f7; --tile: #ffffff; --tile2: #fbfbfd; }
+.band.white { background: #ffffff; --tile: #f5f5f7; --tile2: #fbfbfd; }
+.wrap { max-width: 1024px; margin: 0 auto; padding-left: max(22px, env(safe-area-inset-left, 0px)); padding-right: max(22px, env(safe-area-inset-right, 0px)); }
+.wide { max-width: 1280px; }
+.inner { max-width: 1024px; margin: 0 auto; width: 100%; }
+.stack { display: flex; flex-direction: column; gap: 20px; }
+.center { text-align: center; align-items: center; }
+.center p { margin-inline: auto; }
+
+h1, h2, h3 { font-family: var(--fd); font-weight: 600; margin: 0; text-wrap: balance; color: var(--fg); }
+.headline { font-size: clamp(40px, 6.4vw, 72px); line-height: 1.05; letter-spacing: -0.028em; }
+h3 { font-size: clamp(21px, 2.4vw, 28px); line-height: 1.14; letter-spacing: -0.016em; }
+.lede { font-size: clamp(19px, 2.1vw, 24px); line-height: 1.38; font-weight: 600; letter-spacing: -0.012em; color: var(--fg2); max-width: 36em; margin: 0; }
+.lede b { color: var(--fg); font-weight: 600; }
+p { margin: 0; max-width: 40em; color: var(--fg2); }
+p b { color: var(--fg); font-weight: 600; }
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.more::after { content: " ›"; }
+code, .mono { font-family: var(--fm); font-size: 0.86em; letter-spacing: 0; }
+.small { font-size: 14px; line-height: 1.43; }
+.muted-dark { color: #86868b; }
+
+/* nav */
+nav.local { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(22, 22, 23, 0.78);
+  -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: #161617; }
+nav.local .wrap { display: flex; align-items: center; gap: 24px; height: 52px; }
+nav.local .name { color: #f5f5f7; font: 600 21px/1 var(--fd); letter-spacing: -0.01em; margin-right: auto; }
+nav.local a.l { color: #d2d2d7; font-size: 12px; letter-spacing: -0.01em; }
+nav.local a.l:hover { color: #fff; text-decoration: none; }
+.pill { display: inline-block; background: var(--blue); color: #fff; border: 0; border-radius: 980px; padding: 8px 16px; font: 400 14px/1.2 var(--f); cursor: pointer; letter-spacing: -0.01em; }
+.pill.lg { padding: 12px 22px; font-size: 17px; }
+.pill:hover { background: #0077ed; text-decoration: none; }
+@media (max-width: 820px) { nav.local a.l { display: none; } }
+
+/* hero */
+.hero { padding-block: clamp(56px, 8vw, 96px) 0; background: #000; --fg: #f5f5f7; --fg2: #a1a1a6; --acc: #ff9f0a; --link: #2997ff; }
+.hero h1 { font-size: clamp(64px, 12vw, 136px); line-height: 0.98; letter-spacing: -0.04em; }
+.hero .tag { font-family: var(--fd); font-weight: 600; font-size: clamp(22px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -0.02em; color: #86868b; margin-top: -4px; }
+.hero .cta { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.hero img { display: block; width: 100%; max-width: 1600px; height: auto; margin: 24px auto 0; }
+
+/* tiles */
+.bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; }
+.tile { background: var(--tile); border-radius: 28px; padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 10px; min-width: 0; overflow: hidden; }
+.s2 { grid-column: span 2; } .s3 { grid-column: span 3; } .s4 { grid-column: span 4; } .s6 { grid-column: span 6; }
+@media (max-width: 900px) { .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); } .s2, .s3 { grid-column: span 1; } .s4, .s6 { grid-column: span 2; } }
+@media (max-width: 560px) { .bento { grid-template-columns: 1fr; } .s2, .s3, .s4, .s6 { grid-column: span 1; } }
+.stat { font: 600 clamp(48px, 6vw, 80px)/1 var(--fd); letter-spacing: -0.035em; color: var(--fg); font-variant-numeric: tabular-nums; }
+.stat small { font-size: 0.42em; letter-spacing: -0.01em; margin-left: 4px; }
+.tile .label { font-size: 17px; line-height: 1.35; color: var(--fg2); font-weight: 600; letter-spacing: -0.016em; }
+.tile .label b { color: var(--fg); }
+.tile img { width: 100%; height: auto; display: block; }
+.tile.img { padding: 0; }
+.tile.img figcaption { padding: 0 28px 26px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 20px; align-items: start; }
+.grid2 > * { min-width: 0; }
+
+/* figures, diagrams */
+figure { margin: 0; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+figcaption { font-size: 14px; line-height: 1.43; color: var(--fg2); max-width: 46em; letter-spacing: -0.01em; }
+figcaption b { color: var(--fg); font-weight: 600; }
+.diagram { background: var(--tile); border-radius: 28px; padding: clamp(16px, 2.4vw, 32px); overflow-x: auto; }
+.diagram svg { display: block; min-width: 760px; width: 100%; height: auto; }
+.diagram.small svg { min-width: 300px; }
+svg text { font-family: var(--f); fill: var(--fg); letter-spacing: -0.01em; }
+svg .t-mono { font-family: var(--fm); letter-spacing: 0; }
+svg .t-muted { fill: var(--fg2); } svg .t-acc { fill: var(--acc); } svg .t-sig { fill: var(--sig); } svg .t-crit { fill: var(--crit); }
+svg .box { fill: var(--card); stroke: var(--line); stroke-width: 1; }
+svg .box-soft { fill: var(--tile2); stroke: var(--line); stroke-width: 1; }
+svg .box-acc { fill: color-mix(in srgb, var(--acc) 10%, var(--card)); stroke: var(--acc); stroke-width: 1.2; }
+svg .box-sig { fill: color-mix(in srgb, var(--sig) 10%, var(--card)); stroke: var(--sig); stroke-width: 1.2; }
+svg .box-crit { fill: color-mix(in srgb, var(--crit) 5%, var(--card)); stroke: var(--crit); stroke-width: 1.2; stroke-dasharray: 5 4; }
+svg .wire { stroke: var(--fg2); stroke-width: 1.3; fill: none; }
+svg .wire-acc { stroke: var(--acc); stroke-width: 1.8; fill: none; }
+svg .wire-sig { stroke: var(--sig); stroke-width: 1.8; fill: none; }
+svg .wire-crit { stroke: var(--crit); stroke-width: 1.5; fill: none; stroke-dasharray: 6 4; }
+svg .wire-thin { stroke: var(--line); stroke-width: 1; fill: none; }
+svg .fill-ink { fill: var(--fg2); } svg .fill-acc { fill: var(--acc); } svg .fill-sig { fill: var(--sig); } svg .fill-crit { fill: var(--crit); } svg .fill-muted { fill: var(--fg2); }
+svg .grid-line { stroke: var(--line); stroke-width: 1; opacity: 0.7; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--fg2); }
+.legend i { display: inline-block; width: 16px; height: 3px; border-radius: 2px; vertical-align: 4px; margin-right: 7px; }
+
+/* film + viewer */
+.film { width: 100%; max-width: 100%; display: block; border-radius: 28px; background: #000; aspect-ratio: 16 / 9; }
+.viewer { position: relative; border-radius: 28px; overflow: hidden; background: radial-gradient(ellipse 70% 60% at 50% 42%, #ffffff, #e8e8ed); aspect-ratio: 16 / 10; width: 100%; max-width: 100%; }
+@media (max-width: 700px) { .viewer { aspect-ratio: 4 / 5; } }
+.viewer canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.viewer .hud { position: absolute; left: 20px; top: 18px; right: 20px; display: flex; justify-content: space-between; gap: 10px; pointer-events: none; font-size: 14px; }
+.viewer .chip { background: rgba(255, 255, 255, 0.72); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); padding: 6px 12px; border-radius: 980px; color: #1d1d1f; font-weight: 500; font-variant-numeric: tabular-nums; }
+.viewer .chip:empty { display: none; }
+.viewer .loading { position: absolute; inset: 0; display: grid; place-items: center; color: #6e6e73; font-size: 15px; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; width: 100%; }
+.seg { display: inline-flex; background: #e8e8ed; border-radius: 980px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; color: #1d1d1f; font: 500 14px/1 var(--f); padding: 8px 14px; border-radius: 980px; cursor: pointer; letter-spacing: -0.01em; }
+.seg button[aria-pressed="true"] { background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
+.round { width: 44px; height: 44px; border-radius: 50%; border: 0; background: #1d1d1f; color: #fff; font-size: 15px; cursor: pointer; flex: none; }
+.round:hover { background: #333336; }
+button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid rgba(0, 125, 250, 0.6); outline-offset: 2px; }
+input[type="range"] { flex: 1 1 220px; max-width: 520px; accent-color: #1d1d1f; min-width: 0; }
+.time { font-variant-numeric: tabular-nums; color: #6e6e73; font-size: 14px; min-width: 4.5em; }
+
+/* pipeline */
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 14px; counter-reset: s; }
+ol.steps li { counter-increment: s; background: var(--tile); border-radius: 20px; padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+ol.steps li::before { content: counter(s); font: 600 13px/1 var(--fd); color: var(--sig); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--sig); margin-bottom: 6px; }
+ol.steps li b { font: 600 19px/1.2 var(--fd); color: var(--fg); letter-spacing: -0.016em; }
+ol.steps li span { font-size: 14px; line-height: 1.43; color: var(--fg2); }
+
+/* tables: tech-specs style */
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; letter-spacing: -0.01em; }
+th, td { text-align: left; padding: 14px 16px 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--fg2); }
+th { color: var(--fg); font-weight: 600; font-size: 14px; white-space: nowrap; }
+td:first-child { color: var(--fg); font-weight: 500; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; padding-right: 0; padding-left: 16px; }
+tfoot td { color: var(--fg); font-weight: 600; border-bottom: 0; }
+.sev { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
+.sev.h { background: var(--crit); } .sev.m { background: #ff9f0a; } .sev.l { background: var(--ok); }
+
+.specs { border-top: 1px solid var(--line); }
+.specs > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr); gap: 20px; padding-block: 34px; border-bottom: 1px solid var(--line); }
+.specs h3 { font-size: 24px; }
+.specs ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 18px 28px; }
+.specs li { font-size: 15px; line-height: 1.45; color: var(--fg2); }
+.specs li b { display: block; color: var(--fg); font-size: 17px; font-weight: 600; margin-bottom: 2px; font-variant-numeric: tabular-nums; }
+@media (max-width: 700px) { .specs > div { grid-template-columns: 1fr; } }
+
+.findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; }
+.finding .stat { font-size: clamp(40px, 5vw, 56px); }
+.finding .tag { font: 600 12px/1 var(--f); letter-spacing: 0.04em; text-transform: uppercase; color: var(--crit); }
+.finding .tag.warn { color: #c77700; }
+pre { background: var(--tile); border-radius: 20px; padding: 22px 24px; overflow-x: auto; font-family: var(--fm); font-size: 13.5px; line-height: 1.6; margin: 0; color: var(--fg); }
+.files { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 0 32px; }
+.files div { padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--fg2); min-width: 0; overflow-wrap: anywhere; }
+.files code { color: var(--fg); font-size: 13px; display: block; margin-bottom: 2px; }
+footer { background: #f5f5f7; color: #6e6e73; font-size: 12px; line-height: 1.5; padding-block: 28px 40px; border-top: 1px solid #d2d2d7; }
+footer p { max-width: none; color: #6e6e73; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+<nav class="local" aria-label="Volition sections">
+  <div class="wrap">
+    <span class="name">Volition</span>
+    <a class="l" href="#brain">Brain interface</a>
+    <a class="l" href="#actuator">Actuator</a>
+    <a class="l" href="#limits">Control</a>
+    <a class="l" href="#system">System</a>
+    <a class="l" href="#safety">Safety</a>
+    <a class="l" href="#specs">Specifications</a>
+    <a class="l" href="#film">Film</a>
+    <a class="l" href="@@repo@@">GitHub</a>
+  </div>
+</nav>
+
+<!-- ============================================================ hero -->
+<header class="hero">
+  <div class="wrap stack center">
+    <h1>Volition</h1>
+    <p class="tag">A brain-controlled exoskeleton for people with paraplegia</p>
+    <p class="lede" style="text-align:center">This is a concept design with CAD, electronics, control software and a closed-loop simulation. Four powered joints share one actuator design, a 16-channel EEG cap reads motor imagery, and nothing moves until the user presses a button on the crutch.</p>
+    <div class="cta"><a class="pill lg" href="#film">Watch the film</a><a class="more" href="#model" style="font-size:19px">Open the 3D model</a><a class="more" href="@@repo@@" style="font-size:19px">View the code on GitHub</a></div>
+  </div>
+  <img src="hero.jpg" alt="Volition exoskeleton walking with forearm crutches in a dark studio" width="2400" height="1100">
+</header>
+
+<!-- ============================================================ film -->
+<section class="band dark" id="film">
+  <div class="wrap wide stack center">
+    <h2 class="headline">The film</h2>
+    <p class="lede" style="text-align:center">The simulated user imagines pressing both feet down. When the decoder's evidence crosses its threshold and the user presses the crutch button, Volition stands up. It then walks @@n_steps@@ steps, stops and sits down. Every frame is drawn from the 1 kHz closed-loop simulation.</p>
+    <video class="film" controls playsinline preload="metadata" poster="volition_poster.jpg">
+      <source src="volition_sim.mp4" type="video/mp4">
+    </video>
+    <p class="small muted-dark" style="text-align:center">@@video_len@@ s at 1080p and 60 fps. Simulated physics and synthetic EEG.</p>
+  </div>
+</section>
+
+<!-- ============================================================ highlights -->
+<section class="band light">
+  <div class="wrap stack">
+    <h2 class="headline">Key figures</h2>
+    <div class="bento" style="margin-top:28px">
+      <div class="tile s2"><span class="stat">100<small>N·m</small></span><span class="label">Peak torque at each hip and knee. The software limit sits below the gear's 108 N·m rating.</span></div>
+      <div class="tile s2"><span class="stat">@@exo_mass@@<small>kg</small></span><span class="label">Total mass without crutches, of which 4.4 kg is the backpack.</span></div>
+      <div class="tile s2"><span class="stat">@@walk_speed@@<small>m/s</small></span><span class="label">Simulated walking speed, with a @@step_len@@ m step every @@step_time@@ s.</span></div>
+      <div class="tile s2"><span class="stat">16</span><span class="label">EEG channels: 14 over the motor cortex and 2 for eye movements.</span></div>
+      <div class="tile s2"><span class="stat">@@bci_fa_total@@</span><span class="label">Unconfirmed activations in @@bci_rest_min@@ minutes of simulated rest.</span></div>
+      <div class="tile s2"><span class="stat">468<small>Wh</small></span><span class="label">Hot-swappable battery. The model predicts 7.6 h of walking; 3 to 4 h of mixed use is a safer figure.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 3D -->
+<section class="band white" id="model">
+  <div class="wrap wide stack center">
+    <h2 class="headline">3D model</h2>
+    <p class="lede" style="text-align:center">The CadQuery model, moved by the joint angles from the simulation. Drag to orbit. Click the model first if you want the scroll wheel to zoom.</p>
+    <div class="viewer" id="viewer">
+      <div class="hud"><span class="chip" id="v-state">Loading</span><span class="chip" id="v-angles"></span></div>
+      <div class="loading" id="v-loading">Loading model…</div>
+    </div>
+    <div class="controls">
+      <button class="round" id="v-play" aria-label="Play simulation" aria-pressed="false">▶</button>
+      <input type="range" id="v-scrub" min="0" max="1000" value="0" aria-label="Simulation time">
+      <span class="time" id="v-time">0.0 s</span>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="View">
+        <button data-view="iso" aria-pressed="true">Iso</button><button data-view="front" aria-pressed="false">Front</button><button data-view="side" aria-pressed="false">Side</button><button data-view="back" aria-pressed="false">Back</button>
+      </div>
+      <div class="seg" role="group" aria-label="User"><button id="v-user" aria-pressed="true">Show user</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ brain -->
+<section class="band dark" id="brain">
+  <div class="wrap stack">
+    <h2 class="headline">Brain-computer interface</h2>
+    <p class="lede">After a complete thoracic spinal cord injury, the motor cortex still produces movement commands, but they stop at the lesion. Imagining a movement suppresses the 8 to 13 Hz mu rhythm and the 13 to 30 Hz beta rhythm over the matching area of cortex. Foot imagery shows up near the top of the head around Cz, and hand imagery over C3 and C4. Volition detects these changes from the scalp and uses them as commands.</p>
+    <figure style="margin-top:24px">
+      <div class="diagram">
+        <svg viewBox="0 0 960 330" role="img" aria-label="Neural pathway and the BCI bypass">
+          <defs>
+            <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="fill-sig"/></marker>
+            <marker id="ar2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="fill-acc"/></marker>
+          </defs>
+          <path d="M40 110 C 40 50, 110 26, 160 34 C 215 24, 270 52, 268 104 C 272 140, 236 160, 196 156 C 175 170, 140 168, 128 156 C 80 162, 40 145, 40 110 Z" class="box"/>
+          <path d="M150 36 C 148 70, 160 100, 150 150" class="wire-thin"/>
+          <path d="M70 90 C 100 80, 120 100, 140 88 M180 80 C 200 92, 225 78, 250 92 M80 125 C 100 118, 120 132, 140 122" class="wire-thin"/>
+          <circle cx="152" cy="44" r="16" fill="none" class="wire-acc"/>
+          <text x="24" y="16" font-size="12" class="t-acc">leg motor area</text>
+          <g class="fill-sig"><circle cx="152" cy="30" r="5"/><circle cx="118" cy="36" r="5"/><circle cx="186" cy="36" r="5"/><circle cx="86" cy="52" r="5"/><circle cx="220" cy="52" r="5"/></g>
+          <path d="M160 160 C 162 200, 158 240, 160 300" stroke="var(--fg2)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.18"/>
+          <path d="M160 160 C 162 200, 158 240, 160 300" class="wire"/>
+          <path d="M146 214 L174 238 M174 214 L146 238" stroke="var(--crit)" stroke-width="3.5" stroke-linecap="round"/>
+          <text x="186" y="222" font-size="13" class="t-crit" font-weight="600">Complete lesion, T4 to L1</text>
+          <text x="186" y="240" font-size="12" class="t-muted">descending motor tracts cut</text>
+          <rect x="96" y="296" width="128" height="28" rx="14" class="box"/>
+          <text x="160" y="315" font-size="12" text-anchor="middle">hip and knee muscles</text>
+          <path d="M190 36 Q 245 18 296 46" class="wire-sig" marker-end="url(#ar2)"/>
+          <text x="208" y="13" font-size="11.5" class="t-sig">µV‑level change</text>
+          <rect x="300" y="24" width="150" height="58" rx="14" class="box-sig"/>
+          <text x="314" y="47" font-size="14" font-weight="600">EEG front end</text>
+          <text x="314" y="66" font-size="12" class="t-muted">24‑bit · 500 SPS</text>
+          <path d="M450 53 H482" class="wire-sig" marker-end="url(#ar2)"/>
+          <rect x="486" y="24" width="170" height="58" rx="14" class="box-sig"/>
+          <text x="500" y="47" font-size="14" font-weight="600">Decoder</text>
+          <text x="500" y="66" font-size="12" class="t-muted">rhythm change → intent</text>
+          <path d="M656 53 H688" class="wire-sig" marker-end="url(#ar2)"/>
+          <rect x="692" y="24" width="250" height="58" rx="14" class="box"/>
+          <text x="706" y="47" font-size="14" font-weight="600">Safety supervisor</text>
+          <text x="706" y="66" font-size="12" class="t-muted">thumb confirm · preconditions</text>
+          <path d="M817 82 V150" class="wire-acc" marker-end="url(#ar2a)"/>
+          <rect x="692" y="154" width="250" height="58" rx="14" class="box-acc"/>
+          <text x="706" y="177" font-size="14" font-weight="600">Four actuators</text>
+          <text x="706" y="196" font-size="12" class="t-muted">hip and knee torque, 1 kHz</text>
+          <path d="M692 183 C 520 183, 400 300, 228 310" class="wire-acc" marker-end="url(#ar2a)"/>
+          <text x="430" y="248" font-size="12" class="t-acc">motors replace the missing muscle command</text>
+          <text x="300" y="118" font-size="12.5" class="t-muted">Intent to detection in simulation: <tspan style="fill:var(--fg)">@@bci_latency@@ s</tspan></text>
+          <text x="300" y="137" font-size="12.5" class="t-muted">evidence must accumulate past a threshold first</text>
+        </svg>
+      </div>
+      <figcaption>The command is read at the scalp, classified, confirmed with the crutch button and carried out by the motors, which bypasses the injured spinal cord.</figcaption>
+    </figure>
+
+    <div class="grid2" style="margin-top:20px">
+      <figure>
+        <div class="diagram small">
+          <svg viewBox="0 0 380 384" role="img" aria-label="EEG electrode montage, top view">
+            <circle cx="190" cy="200" r="150" fill="none" class="wire"/>
+            <path d="M172 52 L190 28 L208 52" class="wire"/>
+            <path d="M40 180 Q24 200 40 222 M340 180 Q356 200 340 222" class="wire"/>
+            <circle cx="190" cy="200" r="112" class="grid-line" fill="none"/><circle cx="190" cy="200" r="56" class="grid-line" fill="none"/>
+            <line x1="40" y1="200" x2="340" y2="200" class="grid-line"/><line x1="190" y1="50" x2="190" y2="350" class="grid-line"/>
+            @@montage@@
+            <text x="190" y="376" text-anchor="middle" font-size="11.5" class="t-muted">top view, nose up · reference A1/A2 · bias AFz</text>
+          </svg>
+        </div>
+        <div class="legend"><span><i style="background:var(--acc)"></i>feet imagery</span><span><i style="background:var(--sig)"></i>hand imagery</span><span><i style="background:var(--fg2)"></i>other</span></div>
+      </figure>
+      <div class="stack">
+        <h3>Commands</h3>
+        <p>Two imagery classes are enough because their meaning depends on the current state. Foot imagery moves forward through the sequence (sit to stand, then stand to walk) and hand imagery moves back (walk to stop, then stand to sit). A detected intent only starts a request. The user then has @@confirm_timeout@@ s to press the confirm button on a crutch handle. The stop button on either crutch works at any time, with or without EEG.</p>
+        <div class="tbl"><table>
+          <thead><tr><th>Class</th><th>You imagine</th><th>Where it shows</th></tr></thead>
+          <tbody>
+            <tr><td>Rest</td><td>Nothing in particular</td><td>Normal rhythms</td></tr>
+            <tr><td>Feet</td><td>Pressing both feet down</td><td>Cz, C1, C2, FCz, CPz</td></tr>
+            <tr><td>Hands</td><td>Squeezing both hands</td><td>C3 and C4</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="bento" style="margin-top:20px">
+      <div class="tile s2"><span class="stat">@@bci_acc@@</span><span class="label">Held-out accuracy across three classes. Chance is 33%.</span></div>
+      <div class="tile s2"><span class="stat">@@bci_fa@@</span><span class="label">Unconfirmed detections per minute, seated and walking at rest.</span></div>
+      <div class="tile s2"><span class="stat">@@bci_reject@@</span><span class="label">Share of EEG windows rejected for clipping or artifacts and not decoded.</span></div>
+    </div>
+    <p class="small muted-dark">These numbers come from synthetic EEG that includes noise, blinks, gait artifacts and one electrode pop. Real users vary a lot. Expect a 20 to 40 minute calibration session, and expect some users to prefer button-only control.</p>
+
+    <h3 style="margin-top:40px">Decoding pipeline</h3>
+    <ol class="steps">
+      <li><b>Acquire</b><span>16 channels at 500 SPS, gain 24, AC lead-off detection, linked-ear reference.</span></li>
+      <li><b>Reject artifacts</b><span>A window is dropped if any channel clips past 90% of the ±187.5 mV range, goes flat or jumps in a single step.</span></li>
+      <li><b>Filter</b><span>60 Hz notch, 8 to 30 Hz band-pass, eye-artifact regression, common average reference.</span></li>
+      <li><b>Measure</b><span>Log power in the mu and beta bands on 13 motor-cortex channels, a 1 s window every 62.5 ms.</span></li>
+      <li><b>Classify</b><span>Shrinkage LDA from a calibration session gives Rest, Feet and Hands probabilities.</span></li>
+      <li><b>Accumulate</b><span>A leaky integrator (τ = @@ev_tau@@ s) must exceed @@ev_thr@@ for @@dwell@@ s. After a detection, new ones are blocked for @@refractory@@ s.</span></li>
+      <li><b>Confirm</b><span>The supervisor checks the state and the foot and crutch loads, then waits for the button press.</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================================================ actuator -->
+<section class="band light" id="actuator">
+  <div class="wrap stack">
+    <h2 class="headline">EXA-100 actuator</h2>
+    <p class="lede">The hips and knees use the same actuator, so there is one part to qualify and keep in stock. Each unit has a frameless motor, a 100:1 strain-wave gear, a torque sensor on the output, a motor encoder, an output encoder and a spring-applied brake that holds when power is off. It is 100 mm across and 62 mm long.</p>
+    <div class="bento" style="margin-top:24px">
+      <figure class="tile img s3"><img src="actuator_cutaway.png" alt="EXA-100 actuator in quarter section" loading="lazy" width="1600" height="1100"><figcaption>Quarter section. The hollow shaft carries the cabling through the joint.</figcaption></figure>
+      <figure class="tile img s3"><img src="actuator_exploded.png" alt="EXA-100 actuator exploded along its axis" loading="lazy" width="1800" height="900"><figcaption>Exploded view from the motor end to the output: encoder board, brake, stator and rotor, shaft, wave generator, flexspline, circular spline, crossed-roller bearing, torque flexure and output flange.</figcaption></figure>
+      <div class="tile s2"><span class="stat">1.9<small>kg</small></span><span class="label">Mass of one complete actuator.</span></div>
+      <div class="tile s2"><span class="stat">150<small>N·m</small></span><span class="label">Brake holding torque at the output with no power, so the knees stay locked if the battery fails.</span></div>
+      <div class="tile s2"><span class="stat">19<small>bit</small></span><span class="label">Absolute output encoder. Joint angle is measured after the gear, so gear flex does not show up as angle error.</span></div>
+      <figure class="tile img s2"><img src="exo_iso.png" alt="Volition exoskeleton, three-quarter view" loading="lazy" width="1200" height="1500"></figure>
+      <figure class="tile img s2"><img src="exo_front.png" alt="Volition exoskeleton, front view" loading="lazy" width="1200" height="1500"></figure>
+      <figure class="tile img s2"><img src="exo_side.png" alt="Volition exoskeleton, side view" loading="lazy" width="1200" height="1500"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ limits -->
+<section class="band white" id="limits">
+  <div class="wrap stack">
+    <h2 class="headline">Torque limits and saturation</h2>
+    <p class="lede">The torque a joint can deliver at any moment is the smallest of five limits. Three of them change during use: the voltage limit falls as motor speed rises and as the battery sags, and the thermal limit drops as the winding heats. The controller recomputes all five every millisecond and uses anti-windup so that reaching a limit does not cause an overshoot when the limit releases.</p>
+    <div class="tbl" style="margin-top:16px"><table>
+      <thead><tr><th>Limit</th><th>Source</th><th class="num">At the output</th><th>Response</th></tr></thead>
+      <tbody>
+        <tr><td>Peak</td><td>Strain-wave repeated-peak rating, 108 N·m</td><td class="num">±100 N·m</td><td>Clamp; time at limit is logged</td></tr>
+        <tr><td>Current</td><td>22 A × 0.090 N·m/A × 100 × 0.75</td><td class="num">±148 N·m</td><td>Clamp on the current reference</td></tr>
+        <tr><td>Voltage</td><td>|V<sub>dq</sub>| ≤ V<sub>bus</sub>/√3 with R, L and back-EMF at the present speed</td><td class="num">falls with speed</td><td>Live envelope from measured bus voltage</td></tr>
+        <tr><td>Thermal</td><td>Winding model, 1.6 K/W, τ ≈ 290 s, derate 100 → 120 °C</td><td class="num">45 N·m cont.</td><td>Linear derate, then hold posture</td></tr>
+        <tr><td>Slew</td><td>Gear life and user comfort</td><td class="num">2500 N·m/s</td><td>Rate limit ahead of the clamps</td></tr>
+      </tbody>
+    </table></div>
+
+    <figure style="margin-top:28px">
+      <div class="diagram">
+        <svg viewBox="0 0 1120 300" role="img" aria-label="Saturation chain and anti-windup">
+          <defs>
+            <marker id="ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="fill-ink"/></marker>
+            <marker id="ar6a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="fill-acc"/></marker>
+            <marker id="ar6s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="fill-sig"/></marker>
+          </defs>
+          <rect x="10" y="100" width="128" height="64" rx="14" class="box"/>
+          <text x="22" y="125" font-size="13" font-weight="600">Trajectory</text>
+          <text x="22" y="143" font-size="11" class="t-muted">q, q̇, q̈ reference</text>
+          <text x="22" y="157" font-size="11" class="t-muted">200 Hz → 1 kHz</text>
+          <path d="M138 132 H168" class="wire" marker-end="url(#ar6)"/>
+          <circle cx="180" cy="132" r="11" class="box"/><text x="180" y="137" font-size="13" text-anchor="middle">Σ</text>
+          <path d="M191 132 H214" class="wire" marker-end="url(#ar6)"/>
+          <rect x="216" y="104" width="86" height="56" rx="14" class="box"/>
+          <text x="259" y="129" font-size="13" font-weight="600" text-anchor="middle">PID</text>
+          <text x="259" y="147" font-size="11" class="t-muted" text-anchor="middle">Kp 2200</text>
+          <path d="M302 132 H326" class="wire" marker-end="url(#ar6)"/>
+          <circle cx="338" cy="132" r="11" class="box"/><text x="338" y="137" font-size="13" text-anchor="middle">Σ</text>
+          <rect x="262" y="20" width="200" height="50" rx="14" class="box-soft"/>
+          <text x="274" y="41" font-size="12" font-weight="600">Feed-forward</text>
+          <text x="274" y="58" font-size="11" class="t-muted">dynamics model, rotor inertia, friction</text>
+          <path d="M338 70 V119" class="wire" marker-end="url(#ar6)"/>
+          <path d="M349 132 H372" class="wire" marker-end="url(#ar6)"/>
+          @@chain_blocks@@
+          <path d="M992 132 H1030" class="wire-acc" marker-end="url(#ar6a)"/>
+          <circle cx="1004" cy="132" r="3" class="fill-acc"/><circle cx="1016" cy="132" r="3" class="fill-sig"/>
+          <rect x="1032" y="100" width="80" height="64" rx="14" class="box"/>
+          <text x="1072" y="125" font-size="12" font-weight="600" text-anchor="middle">Current</text>
+          <text x="1072" y="141" font-size="12" font-weight="600" text-anchor="middle">loop</text>
+          <text x="1072" y="157" font-size="10.5" class="t-muted" text-anchor="middle">20 kHz</text>
+          <path d="M1004 132 V214 H259 V164" class="wire-acc" marker-end="url(#ar6a)"/>
+          <text x="380" y="207" font-size="12" class="t-acc">anti-windup: stop integrating into a limit, bleed the integrator by (τsat − τcmd)/Tt, Tt = 0.10 s</text>
+          <path d="M1016 132 V262 H74 V164" class="wire-sig" marker-end="url(#ar6s)" stroke-dasharray="6 4"/>
+          <text x="380" y="255" font-size="12" class="t-sig">governor: below 10% torque headroom, the planner slows the motion</text>
+          <path d="M1072 100 V86 H180 V119" class="wire-thin" marker-end="url(#ar6)"/>
+          <text x="700" y="80" font-size="11" class="t-muted">joint angle from the 19-bit output encoder</text>
+        </svg>
+      </div>
+      <figcaption>The limits are applied in this order, and the first one that binds is logged as the reason shown in the film. While a limit binds, the integrator stops accumulating in that direction and drains toward zero.</figcaption>
+    </figure>
+
+    <div class="grid2" style="margin-top:20px">
+      <figure><div class="diagram small" id="ts-hip"></div><figcaption>Hip torque against speed. The curves are the limits at full, nominal and empty battery, and each dot is one 10 ms sample from the simulation.</figcaption></figure>
+      <figure><div class="diagram small" id="ts-knee"></div><figcaption>Knee torque against speed. Sit-to-stand reaches the 100 N·m limit, while walking stays well inside it.</figcaption></figure>
+    </div>
+    <div class="legend" id="ts-legend"></div>
+
+    <figure style="margin-top:28px">
+      <div class="grid2">
+        <div class="diagram small" id="aw-err"></div>
+        <div class="diagram small" id="aw-int"></div>
+      </div>
+      <div class="legend" id="aw-legend"></div>
+      <figcaption>@@aw_caption@@</figcaption>
+    </figure>
+
+    <div class="tbl" style="margin-top:20px"><table>
+      <thead><tr><th>Joint, task</th><th class="num">Peak τ (N·m)</th><th class="num">RMS τ (N·m)</th><th class="num">Peak ω (rad/s)</th><th class="num">Peak P (W)</th><th class="num">Margin to 100 N·m</th></tr></thead>
+      <tbody>@@sizing_rows@@</tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ============================================================ system -->
+<section class="band light" id="system">
+  <div class="wrap wide stack">
+    <div class="inner stack">
+      <h2 class="headline">System architecture</h2>
+      <p class="lede">An application processor runs the EEG decoder. A separate lockstep safety controller sends every actuator command and treats the decoder's output only as a request. A hardwired stop chain works independently of both.</p>
+    </div>
+    <figure style="margin-top:24px">
+      <div class="diagram">
+        <svg viewBox="0 0 1120 640" role="img" aria-label="System block diagram">
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-ink"/></marker>
+            <marker id="ar-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-sig"/></marker>
+            <marker id="ar-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-acc"/></marker>
+            <marker id="ar-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fill-crit"/></marker>
+          </defs>
+          <rect x="20" y="40" width="150" height="74" rx="14" class="box-sig"/>
+          <text x="34" y="65" font-weight="600" font-size="14">EEG cap</text>
+          <text x="34" y="84" font-size="12" class="t-muted">16 ch, 10-20 subset</text>
+          <text x="34" y="101" font-size="12" class="t-muted">gel or active dry</text>
+          <rect x="210" y="40" width="200" height="74" rx="14" class="box-sig"/>
+          <text x="224" y="65" font-weight="600" font-size="14">Isolated EEG front end</text>
+          <text x="224" y="84" font-size="12" class="t-muted">2× ADS1299 · 24-bit · 500 SPS</text>
+          <text x="224" y="101" font-size="12" class="t-muted">medical isolation barrier</text>
+          <rect x="446" y="40" width="200" height="74" rx="14" class="box"/>
+          <text x="460" y="65" font-weight="600" font-size="14">Application processor</text>
+          <text x="460" y="84" font-size="12" class="t-muted">Linux RT · BCI decoder</text>
+          <text x="460" y="101" font-size="12" class="t-muted">logging · clinician app</text>
+          <path d="M170 77 H206" class="wire-sig" marker-end="url(#ar-s)"/>
+          <path d="M410 77 H442" class="wire-sig" marker-end="url(#ar-s)"/>
+          <text x="414" y="70" font-size="11" class="t-muted">SPI</text>
+          <path d="M646 77 H716" class="wire-sig" marker-end="url(#ar-s)"/>
+          <text x="652" y="70" font-size="11" class="t-muted">intent</text>
+          <text x="652" y="96" font-size="11" class="t-muted">16 Hz, CRC</text>
+          <rect x="720" y="40" width="380" height="262" rx="18" class="box" style="stroke-width:1.6"/>
+          <text x="738" y="68" font-weight="700" font-size="16">Safety controller</text>
+          <text x="738" y="87" font-size="12" class="t-muted">lockstep dual-core MCU</text>
+          <g font-size="13">
+            <text x="738" y="116">Supervisor state machine · 1 kHz</text>
+            <text x="738" y="138">Intent gate: thumb confirm + preconditions</text>
+            <text x="738" y="160">Gait and sit-stand planner · 200 Hz</text>
+            <text x="738" y="182">Joint loops and the five-limit chain · 1 kHz</text>
+            <text x="738" y="204">Governor slows motion near limits</text>
+            <text x="738" y="226">Fusion: IMUs, insoles, crutch loads</text>
+            <text x="738" y="248">Heartbeats: intent, drives, stop chain</text>
+            <text x="738" y="270">Fault reaction: hold, brake, torque off</text>
+          </g>
+          <rect x="20" y="150" width="270" height="64" rx="14" class="box"/>
+          <text x="34" y="175" font-weight="600" font-size="14">Smart forearm crutches ×2</text>
+          <text x="34" y="196" font-size="12" class="t-muted">confirm and stop buttons · load cell · IMU</text>
+          <path d="M290 182 H716" class="wire" marker-end="url(#ar)"/>
+          <text x="300" y="176" font-size="11" class="t-muted">wired CAN · 200 Hz</text>
+          <rect x="20" y="232" width="270" height="64" rx="14" class="box"/>
+          <text x="34" y="257" font-weight="600" font-size="14">Body sensors</text>
+          <text x="34" y="278" font-size="12" class="t-muted">IMU ×5 · insoles 2×4 FSR · cuff FSRs</text>
+          <path d="M290 264 H716" class="wire" marker-end="url(#ar)"/>
+          <text x="300" y="258" font-size="11" class="t-muted">SPI and ADC · 1 kHz</text>
+          <rect x="720" y="340" width="380" height="270" rx="18" class="box-acc"/>
+          <text x="738" y="368" font-weight="700" font-size="16">Joint modules ×4</text>
+          <text x="738" y="387" font-size="12" class="t-muted">hip L/R, knee L/R · one EXA-100 design</text>
+          <g font-size="13">
+            <text x="738" y="416">Field-oriented drive · 20 kHz current loop</text>
+            <text x="738" y="438">Frameless BLDC · 0.090 N·m/A · 10 pole pairs</text>
+            <text x="738" y="460">Strain-wave 100:1 · crossed-roller output</text>
+            <text x="738" y="482">Output torque sensor · ±150 N·m</text>
+            <text x="738" y="504">Encoders: 14-bit motor, 19-bit output</text>
+            <text x="738" y="526">Power-off brake · 150 N·m held</text>
+            <text x="738" y="548">Winding sensor · two-channel torque off</text>
+          </g>
+          <path d="M910 302 V336" class="wire" marker-end="url(#ar)"/>
+          <text x="918" y="324" font-size="11" class="t-muted">CAN-FD 5 Mb/s · 1 kHz sync</text>
+          <rect x="20" y="340" width="230" height="80" rx="14" class="box-acc"/>
+          <text x="34" y="365" font-weight="600" font-size="14">Battery 13S2P · 468 Wh</text>
+          <text x="34" y="385" font-size="12" class="t-muted">39.0 to 54.6 V · 21700 cells</text>
+          <text x="34" y="403" font-size="12" class="t-muted">BMS: cell monitoring, balancing</text>
+          <rect x="290" y="340" width="200" height="80" rx="14" class="box"/>
+          <text x="304" y="365" font-weight="600" font-size="14">Power entry</text>
+          <text x="304" y="385" font-size="12" class="t-muted">40 A fuse · precharge</text>
+          <text x="304" y="403" font-size="12" class="t-muted">contactor · reverse protection</text>
+          <rect x="530" y="340" width="150" height="80" rx="14" class="box-acc"/>
+          <text x="544" y="365" font-weight="600" font-size="14">48 V bus</text>
+          <text x="544" y="385" font-size="12" class="t-muted">2 mF DC link</text>
+          <text x="544" y="403" font-size="12" class="t-muted">15 A fuse per drive</text>
+          <path d="M250 380 H286" class="wire-acc" marker-end="url(#ar-a)"/>
+          <path d="M490 380 H526" class="wire-acc" marker-end="url(#ar-a)"/>
+          <path d="M680 380 H716" class="wire-acc" marker-end="url(#ar-a)"/>
+          <rect x="530" y="440" width="150" height="60" rx="14" class="box"/>
+          <text x="544" y="464" font-weight="600" font-size="13">Brake chopper</text>
+          <text x="544" y="484" font-size="12" class="t-muted">on at 56 V · 4 Ω</text>
+          <path d="M605 420 V436" class="wire-acc"/>
+          <rect x="290" y="440" width="200" height="60" rx="14" class="box"/>
+          <text x="304" y="464" font-weight="600" font-size="13">DC/DC 48 → 12 → 5 → 3.3 V</text>
+          <text x="304" y="484" font-size="12" class="t-muted">logic, sensors, brakes, iso 5 V</text>
+          <path d="M390 420 V436" class="wire-acc"/>
+          <rect x="20" y="540" width="300" height="70" rx="14" class="box-crit"/>
+          <text x="34" y="565" font-weight="600" font-size="14" class="t-crit">Stop buttons ×3</text>
+          <text x="34" y="585" font-size="12" class="t-muted">backpack · crutch · caregiver remote</text>
+          <text x="34" y="601" font-size="12" class="t-muted">dual-channel, normally closed</text>
+          <rect x="360" y="540" width="270" height="70" rx="14" class="box-crit"/>
+          <text x="374" y="565" font-weight="600" font-size="14" class="t-crit">Safety relay, Cat 3 / PL d</text>
+          <text x="374" y="585" font-size="12" class="t-muted">hold 200 ms, then torque off</text>
+          <text x="374" y="601" font-size="12" class="t-muted">cuts brake power so brakes clamp</text>
+          <path d="M320 575 H356" class="wire-crit" marker-end="url(#ar-c)"/>
+          <path d="M630 575 H716" class="wire-crit" marker-end="url(#ar-c)"/>
+          <text x="640" y="568" font-size="11" class="t-crit">STO ×2</text>
+          <path d="M510 540 V322 H760 V306" class="wire-crit" marker-end="url(#ar-c)"/>
+          <text x="520" y="316" font-size="11" class="t-crit">stop request</text>
+        </svg>
+      </div>
+      <figcaption>Blue lines are the neural signal path, orange is motor power and red is the hardwired stop chain. The decoder has no direct connection to the drives.</figcaption>
+    </figure>
+    <div class="inner" style="margin-top:20px">
+      <div class="tbl"><table>
+        <thead><tr><th>Loop</th><th>Runs on</th><th class="num">Rate</th><th>Job</th></tr></thead>
+        <tbody>
+          <tr><td>Current</td><td>Drive MCU</td><td class="num">20 kHz</td><td>dq current control, space-vector PWM, voltage-circle limiting</td></tr>
+          <tr><td>Joint</td><td>Safety controller</td><td class="num">1 kHz</td><td>Feed-forward + PID, five-limit chain, anti-windup</td></tr>
+          <tr><td>Supervisor</td><td>Safety controller</td><td class="num">1 kHz</td><td>Limits, heartbeats, tracking error, sensor plausibility</td></tr>
+          <tr><td>Planner</td><td>Safety controller</td><td class="num">200 Hz</td><td>Gait and sit-stand trajectories, inverse kinematics, governor</td></tr>
+          <tr><td>Decoder</td><td>Application processor</td><td class="num">16 Hz</td><td>Band power, LDA, evidence integration</td></tr>
+          <tr><td>EEG</td><td>ADS1299</td><td class="num">500 SPS</td><td>16 channels, lead-off detection, bias drive</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ schematics -->
+<section class="band white" id="electronics">
+  <div class="wrap wide stack">
+    <div class="inner stack">
+      <h2 class="headline">Schematics</h2>
+      <p class="lede">Two simplified schematics: one EEG input channel with its patient protection, and one joint drive with its current sensing, brake and safe-torque-off paths. Component values are starting points for layout.</p>
+    </div>
+    <figure style="margin-top:24px">
+      <div class="diagram">
+        <svg viewBox="0 0 1060 340" role="img" aria-label="EEG analog front end schematic">
+          <path d="M30 70 A14 14 0 0 1 58 70" class="wire-sig"/><text x="22" y="52" font-size="12">Cz</text>
+          <path d="M30 150 A14 14 0 0 1 58 150" class="wire-sig"/><text x="22" y="132" font-size="12">A1/A2</text>
+          <path d="M30 250 A14 14 0 0 1 58 250" class="wire-sig"/><text x="22" y="232" font-size="12">AFz bias</text>
+          <text x="22" y="300" font-size="11.5" class="t-muted">scalp electrodes, shielded leads</text>
+          <path d="M44 70 V80 H90" class="wire"/>
+          <rect x="90" y="72" width="44" height="16" rx="3" class="box"/><text x="92" y="64" font-size="11.5" class="t-mono">R1 10k</text>
+          <path d="M134 80 H230" class="wire"/>
+          <circle cx="180" cy="80" r="3" class="fill-ink"/>
+          <path d="M180 80 V108" class="wire"/><path d="M168 108 H192 M168 114 H192" class="wire"/><path d="M180 114 V130" class="wire"/>
+          <text x="196" y="116" font-size="11.5" class="t-mono">C1 2.2n</text>
+          <circle cx="216" cy="80" r="3" class="fill-ink"/>
+          <path d="M216 80 V58" class="wire"/><rect x="206" y="40" width="20" height="18" rx="3" class="box-soft"/><text x="232" y="53" font-size="11" class="t-muted">ESD clamp to rails</text>
+          <path d="M230 80 H470" class="wire"/>
+          <text x="300" y="74" font-size="11.5" class="t-sig">IN1P … IN8P, ×2 devices</text>
+          <path d="M44 150 V160 H90" class="wire"/>
+          <rect x="90" y="152" width="44" height="16" rx="3" class="box"/><text x="92" y="144" font-size="11.5" class="t-mono">R2 10k</text>
+          <path d="M134 160 H470" class="wire"/>
+          <path d="M180 160 V130" class="wire" stroke-dasharray="3 3"/>
+          <text x="300" y="154" font-size="11.5" class="t-sig">SRB1, common reference</text>
+          <path d="M44 250 V260 H90" class="wire"/>
+          <rect x="90" y="252" width="60" height="16" rx="3" class="box"/><text x="92" y="244" font-size="11.5" class="t-mono">R3 390k</text>
+          <path d="M150 260 H470" class="wire"/>
+          <text x="190" y="254" font-size="11.5" class="t-sig">BIASOUT, driven right leg</text>
+          <text x="190" y="284" font-size="11" class="t-muted">R3 limits DC patient current to 2.5 V / 390 kΩ ≈ 6.4 µA</text>
+          <rect x="470" y="40" width="200" height="250" rx="16" class="box-sig"/>
+          <text x="570" y="68" font-size="16" font-weight="700" text-anchor="middle">ADS1299 ×2</text>
+          <text x="570" y="87" font-size="11.5" text-anchor="middle" class="t-muted">8-channel 24-bit ΔΣ, daisy-chained</text>
+          <g font-size="12">
+            <text x="486" y="122">Gain 24</text>
+            <text x="486" y="141">VREF 4.5 V internal</text>
+            <text x="486" y="160">Full scale ±187.5 mV</text>
+            <text x="486" y="179">500 SPS</text>
+            <text x="486" y="198">Lead-off 6 nA AC</text>
+            <text x="486" y="217">AVDD 5 V · DVDD 3.3 V</text>
+            <text x="486" y="250">DRDY · SPI 4 MHz</text>
+          </g>
+          <path d="M670 240 H730" class="wire"/>
+          <line x1="760" y1="30" x2="760" y2="320" stroke="var(--crit)" stroke-width="2" stroke-dasharray="8 5"/>
+          <text x="770" y="46" font-size="12" class="t-crit" font-weight="600">Isolation barrier</text>
+          <text x="770" y="63" font-size="11" class="t-muted">2×MOPP · 4 kV AC · 8 mm creepage</text>
+          <rect x="730" y="222" width="60" height="38" rx="6" class="box"/><text x="738" y="245" font-size="11" class="t-mono">ISO77xx</text>
+          <path d="M790 240 H860" class="wire"/>
+          <rect x="860" y="210" width="180" height="60" rx="14" class="box"/>
+          <text x="874" y="235" font-size="13.5" font-weight="600">Application processor</text>
+          <text x="874" y="254" font-size="11.5" class="t-muted">SPI → buffer → decoder</text>
+          <rect x="730" y="110" width="60" height="44" rx="6" class="box"/><text x="740" y="130" font-size="11" class="t-mono">iso</text><text x="740" y="145" font-size="11" class="t-mono">DC/DC</text>
+          <path d="M790 132 H860" class="wire-acc"/><text x="800" y="124" font-size="11" class="t-muted">5 V sys</text>
+          <path d="M730 132 H690 V100 H670" class="wire-acc"/>
+          <text x="676" y="94" font-size="11" class="t-muted">LDOs 5 V / 3.3 V</text>
+        </svg>
+      </div>
+      <figcaption>EEG input channel, one of 14 scalp channels. R1 and C1 form a first-order anti-alias filter near 7 kHz and limit fault current; the clamp protects against static. The front end floats behind a medical isolation barrier because the electrodes touch the patient. Verify patient currents against IEC 60601-1 and IEC 80601-2-26.</figcaption>
+    </figure>
+    <figure style="margin-top:24px">
+      <div class="diagram">
+        <svg viewBox="0 0 1080 420" role="img" aria-label="Joint drive power stage schematic">
+          <path d="M60 40 H640" class="wire-acc" stroke-width="2.4"/>
+          <text x="64" y="30" font-size="12.5" class="t-acc">+48 V bus, 39 to 56 V</text>
+          <path d="M60 330 H640" class="wire" stroke-width="2"/>
+          <text x="64" y="350" font-size="12.5" class="t-muted">Power ground</text>
+          <path d="M130 40 V160 M118 160 H142 M118 168 H142 M130 168 V330" class="wire"/>
+          <text x="146" y="162" font-size="11.5" class="t-mono">C_DC 2×470 µF + 4×2.2 µF</text>
+          @@bridges@@
+          <rect x="250" y="370" width="320" height="40" rx="12" class="box"/>
+          <text x="264" y="395" font-size="12.5" font-weight="600">Three-phase gate driver · 80 ns dead time</text>
+          <path d="M410 370 V352" class="wire-thin" stroke-dasharray="3 3"/>
+          <text x="582" y="386" font-size="11.5" class="t-crit">EN ← STO channel A</text>
+          <text x="582" y="403" font-size="11.5" class="t-crit">boot supply ← STO channel B</text>
+          <circle cx="770" cy="185" r="46" class="box"/>
+          <text x="770" y="181" font-size="16" font-weight="700" text-anchor="middle">M</text>
+          <text x="770" y="199" font-size="11.5" text-anchor="middle" class="t-muted">3-phase</text>
+          <path d="M816 185 H850" class="wire" stroke-width="3"/>
+          <rect x="850" y="160" width="60" height="50" rx="10" class="box-acc"/>
+          <text x="880" y="183" font-size="12.5" text-anchor="middle" font-weight="600">100:1</text>
+          <text x="880" y="199" font-size="10" text-anchor="middle" class="t-muted">strain-wave</text>
+          <path d="M910 185 H940" class="wire" stroke-width="3"/>
+          <rect x="940" y="166" width="38" height="38" rx="8" class="box"/>
+          <text x="959" y="190" font-size="12" text-anchor="middle">τ</text>
+          <path d="M978 185 H1040" class="wire" stroke-width="3"/>
+          <text x="1002" y="176" font-size="12">joint</text>
+          <rect x="740" y="80" width="60" height="26" rx="6" class="box-soft"/><text x="749" y="98" font-size="11" class="t-mono">ENC1</text>
+          <path d="M770 106 V139" class="wire-thin"/>
+          <text x="808" y="92" font-size="11" class="t-muted">14-bit, commutation</text>
+          <rect x="986" y="240" width="60" height="26" rx="6" class="box-soft"/><text x="993" y="258" font-size="11" class="t-mono">ENC2</text>
+          <path d="M1016 240 V185" class="wire-thin"/>
+          <text x="900" y="292" font-size="11" class="t-muted">19-bit absolute output</text>
+          <path d="M959 204 V300 H900" class="wire-thin"/>
+          <text x="706" y="316" font-size="11" class="t-muted">bridge → amplifier → 24-bit ADC · ±150 N·m</text>
+          <rect x="700" y="240" width="56" height="34" rx="8" class="box"/>
+          <text x="728" y="262" font-size="12" text-anchor="middle">brake</text>
+          <text x="690" y="232" font-size="11" class="t-muted" text-anchor="end">12 V coil, PWM hold</text>
+          <text x="690" y="248" font-size="11" class="t-muted" text-anchor="end">no power = clamped</text>
+        </svg>
+      </div>
+      <figcaption>Joint drive power stage. Three half-bridges of 80 V, ~3 mΩ MOSFETs; low-side 1 mΩ shunts feed the current loop. Safe torque off uses two independent channels, one disabling the gate driver and one removing the high-side boot supply, so no single fault can energise the motor.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================================================ supervisor -->
+<section class="band light" id="supervisor">
+  <div class="wrap wide stack">
+    <div class="inner stack">
+      <h2 class="headline">Supervisor state machine</h2>
+      <p class="lede">Transitions requested by the user need a decoded intent and a button press. Transitions to the safe hold state happen automatically when a monitor trips.</p>
+    </div>
+    <figure style="margin-top:24px">
+      <div class="diagram">
+        <svg viewBox="0 0 1020 390" role="img" aria-label="Supervisor state machine">
+          <defs><marker id="ar7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="fill-ink"/></marker>
+            <marker id="ar7c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="fill-crit"/></marker></defs>
+          <g font-size="15" font-weight="600" text-anchor="middle">
+            <rect x="20" y="40" width="170" height="56" rx="28" class="box"/><text x="105" y="73">Seated</text>
+            <rect x="290" y="40" width="170" height="56" rx="28" class="box-sig"/><text x="375" y="73">Standing up</text>
+            <rect x="560" y="40" width="170" height="56" rx="28" class="box"/><text x="645" y="73">Standing</text>
+            <rect x="830" y="40" width="170" height="56" rx="28" class="box-acc"/><text x="915" y="73">Walking</text>
+            <rect x="830" y="200" width="170" height="56" rx="28" class="box"/><text x="915" y="233">Stopping</text>
+            <rect x="290" y="200" width="170" height="56" rx="28" class="box-sig"/><text x="375" y="233">Sitting down</text>
+            <rect x="425" y="310" width="170" height="56" rx="28" class="box-crit"/><text x="510" y="343" class="t-crit">Safe hold</text>
+          </g>
+          <g font-size="12" class="t-muted">
+            <path d="M190 68 H286" class="wire" marker-end="url(#ar7)"/><text x="196" y="58">Feet + confirm</text>
+            <path d="M460 68 H556" class="wire" marker-end="url(#ar7)"/><text x="466" y="58">plan complete</text>
+            <path d="M730 68 H826" class="wire" marker-end="url(#ar7)"/><text x="736" y="58">Feet + confirm</text><text x="736" y="116">feet, crutches loaded</text>
+            <path d="M915 96 V196" class="wire" marker-end="url(#ar7)"/><text x="922" y="152">Hands + confirm</text>
+            <path d="M830 220 L700 100" class="wire" marker-end="url(#ar7)"/><text x="744" y="188">feet together</text>
+            <path d="M600 96 L462 212" class="wire" marker-end="url(#ar7)"/><text x="472" y="152">Hands + confirm</text>
+            <path d="M290 228 H105 V100" class="wire" marker-end="url(#ar7)"/><text x="122" y="222">seat contact</text>
+          </g>
+          <path d="M30 300 H1000" class="wire-crit" stroke-dasharray="2 4"/>
+          <path d="M510 300 V306" class="wire-crit" marker-end="url(#ar7c)"/>
+          <text x="30" y="290" font-size="12" class="t-crit">from any state: tracking error over 12°, a clipped torque sensor, bus over 58 V, an overheated winding or a stop button</text>
+          <text x="612" y="340" font-size="12" class="t-muted">hold posture, then knee brakes;</text>
+          <text x="612" y="357" font-size="12" class="t-muted">a clinician clears it, then a guided sit</text>
+        </svg>
+      </div>
+    </figure>
+    <div class="inner grid2" style="margin-top:20px">
+      <div class="stack"><h3>Gait planning</h3><p>Trajectories are planned in Cartesian space and turned into joint angles by inverse kinematics, so the stance foot stays flat and planted by construction. The swing foot clears the floor by @@clearance@@ cm on a minimum-jerk path, and the pelvis vaults over the stance leg to keep the knee near @@stance_knee@@°. A @@step_len@@ m step every @@step_time@@ s, @@ds_pct@@% double support.</p></div>
+      <div class="stack"><h3>Joint control</h3><p>Each joint's command is a dynamics-model feed-forward plus PID on the output encoder. In simulation the model is deliberately 8% light, so the integrator has real work to do. A torque sensor on every output closes the inner loop, and a muscle spasm appears as a torque residual that the supervisor can respond to.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ safety -->
+<section class="band dark" id="safety">
+  <div class="wrap stack">
+    <h2 class="headline">Safety</h2>
+    <p class="lede">The user cannot catch themselves if something goes wrong, so each hazard below has a detection method and a mitigation that works without the EEG.</p>
+    <div class="tbl" style="margin-top:16px"><table>
+      <thead><tr><th>Hazard</th><th>Cause</th><th>Detection</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sev h"></span>Fall while walking</td><td>Balance loss, crutch slip</td><td>Trunk tilt rate, crutch load drop, centre of pressure</td><td>Freeze in double support, knee brakes, trained spotter early on</td></tr>
+        <tr><td><span class="sev h"></span>Unintended motion</td><td>BCI false positive</td><td>Not needed</td><td>Decoder output is only a request; nothing moves without the thumb press</td></tr>
+        <tr><td><span class="sev h"></span>Knee buckling</td><td>Power loss</td><td>Bus undervoltage, drive heartbeat</td><td>Spring-applied brakes hold 150 N·m unpowered</td></tr>
+        <tr><td><span class="sev h"></span>Autonomic dysreflexia</td><td>Strap pressure or bladder, lesion at T6 or above</td><td>User report, optional HR/BP wearable</td><td>Cuff pressure ≤ 30 kPa, bladder routine, fast doffing protocol</td></tr>
+        <tr><td><span class="sev h"></span>Fracture</td><td>Disuse osteoporosis</td><td>Bone density screening</td><td>Torque and range limits, slow ramps, soft stops</td></tr>
+        <tr><td><span class="sev m"></span>Over-rotation</td><td>Software or encoder fault</td><td>Dual encoders cross-checked</td><td>Soft limits, elastomer hard stops 5° beyond</td></tr>
+        <tr><td><span class="sev m"></span>Spasm or clonus</td><td>Stretch reflex</td><td>Torque residual spikes</td><td>Lower impedance, pause, hold</td></tr>
+        <tr><td><span class="sev m"></span>Orthostatic hypotension</td><td>Standing after long sitting</td><td>User report</td><td>Slow first stand, abdominal binder, seat in reach</td></tr>
+        <tr><td><span class="sev m"></span>Battery thermal event</td><td>Cell defect, overcharge</td><td>BMS cell voltage and temperature</td><td>Certified cells, fused pack, regen capped, chopper</td></tr>
+        <tr><td><span class="sev l"></span>Skin breakdown</td><td>Shear under cuffs</td><td>Skin check after sessions</td><td>Breathable liners, alignment marks, time limits</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid2" style="margin-top:28px">
+      <div class="stack"><h3>Regulatory path</h3><p>In the US, powered lower-extremity exoskeletons are Class II devices with special controls under 21 CFR 890.3480, product code PHL. Expect a 510(k) with an existing exoskeleton as predicate. The EEG interface is new and may push the submission toward De Novo, or require clinical data on false activations.</p></div>
+      <div class="stack"><h3>Standards</h3><p>IEC 60601-1 with -1-2 and -1-11 · IEC 80601-2-26 for EEG · ISO 13482 · ISO 14971 · IEC 62304, class C for the safety controller · ISO 13849-1 and IEC 61508 for the stop chain · IEC 62133-2 and UN 38.3 for the battery · ISO 10993 for skin contact.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ findings -->
+<section class="band white" id="findings">
+  <div class="wrap stack">
+    <h2 class="headline">Open issues</h2>
+    <p class="lede">The simulation shows where the current design falls short.</p>
+    <div class="tbl" style="margin-top:12px"><table>
+      <thead><tr><th>Issue</th><th class="num">Result</th><th>What the simulation shows</th><th>Proposed fix</th></tr></thead>
+      <tbody>@@finding_rows@@</tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ============================================================ specs -->
+<section class="band white" id="specs" style="padding-top:0">
+  <div class="wrap stack">
+    <h2 class="headline" style="margin-bottom:12px">Specifications</h2>
+    <div class="specs">
+      <div><h3>Fit</h3><ul>
+        <li><b>1.55 to 1.95 m</b>user height</li><li><b>≤ 100 kg</b>user weight; ≤ 90 kg until the knee upgrade</li>
+        <li><b>0.38 to 0.48 m</b>thigh and shank links, 10 mm steps</li><li><b>0.34 to 0.44 m</b>pelvis width</li></ul></div>
+      <div><h3>Weight</h3><ul><li><b>@@exo_mass@@ kg</b>without crutches</li><li><b>4.4 kg</b>backpack with battery and electronics</li><li><b>1.9 kg</b>each actuator</li></ul></div>
+      <div><h3>Actuators</h3><ul>
+        <li><b>4 × EXA‑100</b>hips and knees, one design</li><li><b>100 N·m peak</b>software limit; 45 N·m continuous</li>
+        <li><b>4.0 rad/s</b>output speed limit</li><li><b>100:1 strain-wave</b>size 25 class, crossed-roller output</li>
+        <li><b>±150 N·m</b>output torque sensor</li><li><b>150 N·m</b>power-off brake holding torque</li></ul></div>
+      <div><h3>Ankles</h3><ul><li><b>Passive AFO</b>dorsiflexion-assist spring, 120 N·m/rad</li><li><b>−15° to +20°</b>range of motion</li></ul></div>
+      <div><h3>Battery and power</h3><ul>
+        <li><b>468 Wh</b>13S2P lithium-ion, hot-swappable</li><li><b>39 to 54.6 V</b>bus range, 46.8 V nominal</li>
+        <li><b>@@walk_power@@ W</b>average draw while walking, simulated</li><li><b>3 to 4 h</b>planning figure for mixed use</li>
+        <li><b>Regeneration</b>limited to 10 A; chopper above 56 V</li></ul></div>
+      <div><h3>Brain interface</h3><ul>
+        <li><b>16 channels</b>14 scalp, 2 eye</li><li><b>24-bit, 500 SPS</b>2× ADS1299, gain 24</li>
+        <li><b>3 classes</b>rest, feet, hands</li><li><b>16 Hz</b>decoder update, 1 s window</li><li><b>@@confirm_timeout@@ s</b>to confirm with the thumb</li></ul></div>
+      <div><h3>Sensors</h3><ul><li><b>5 IMUs</b>pelvis, thighs, shanks</li><li><b>2 × 4-zone</b>pressure insoles</li><li><b>8 encoders</b>motor and output per joint</li><li><b>2 smart crutches</b>load cell, buttons, IMU</li></ul></div>
+      <div><h3>Control</h3><ul><li><b>20 kHz</b>current loop</li><li><b>1 kHz</b>joint and supervisor loops</li><li><b>200 Hz</b>trajectory planner</li><li><b>CAN-FD</b>5 Mb/s to the drives</li></ul></div>
+      <div><h3>Performance</h3><ul>
+        <li><b>@@walk_speed@@ m/s</b>walking speed, simulated</li><li><b>3.0 s</b>sit to stand</li>
+        <li><b>@@pk_knee_sts@@ N·m</b>peak knee torque, sit to stand</li><li><b>@@pk_hip_sts@@ N·m</b>peak hip torque, sit to stand</li></ul></div>
+      <div><h3>Safety</h3><ul><li><b>3 stop buttons</b>dual-channel, Cat 3 / PL d</li><li><b>2-channel STO</b>on every drive</li><li><b>Brakes</b>on all four joints</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ BOM -->
+<section class="band light" id="bom">
+  <div class="wrap stack">
+    <h2 class="headline">Bill of materials</h2>
+    <p class="lede">Major parts for one prototype, with rough single-unit prices in US dollars. Get quotes before relying on these numbers.</p>
+    <div class="tbl" style="margin-top:12px"><table>
+      <thead><tr><th>Part</th><th>Specification</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Total</th></tr></thead>
+      <tbody>@@bom_rows@@</tbody>
+      <tfoot><tr><td colspan="4">Estimated prototype total</td><td class="num">@@bom_total@@</td></tr></tfoot>
+    </table></div>
+  </div>
+</section>
+
+<!-- ============================================================ files -->
+<section class="band white" id="files">
+  <div class="wrap stack">
+    <h2 class="headline">Source code</h2>
+    <p class="lede">One parameter file, <code>params.py</code>, drives the CAD, the dynamics, the controller, the film and this page. After changing it, run these scripts in order. The full source is on <a href="@@repo@@">GitHub</a>.</p>
+    <pre>python cad/build_cad.py        # STEP, STL and glTF
+python design/sizing.py        # torque and speed demand, envelopes, thermal, runtime
+python control/simulate.py     # 1 kHz closed loop, BCI, anti-windup study
+python video/stills.py         # product renders
+python video/render.py         # the film at 1080p, 60 fps
+python docs/build_page.py      # this page</pre>
+    <div class="files" style="margin-top:8px">@@file_rows@@</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap stack" style="gap:8px">
+    <p>Volition is a concept design produced in software. It has not been built, tested on people or reviewed by a regulator. The simulation uses simplified dynamics and synthetic EEG; its numbers are for design exploration, not clinical claims.</p>
+    <p>Document VOL-SDD-001, revision A, @@date@@. Source code: <a href="@@repo@@" style="color:#0066cc">github.com/OjasMishra32/volition</a></p>
+  </div>
+</footer>
+
+<script id="results" type="application/json">@@RESULTS_JSON@@</script>
+<script id="pose" type="application/json">@@POSE_JSON@@</script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(function () {
+  const R = JSON.parse(document.getElementById("results").textContent);
+  const P = JSON.parse(document.getElementById("pose").textContent);
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+
+  // ---------------------------------------------------------------- charts
+  function chart(host, opt) {
+    host.innerHTML = "";
+    const cs = getComputedStyle(host), v = (n) => cs.getPropertyValue(n).trim();
+    const W = opt.w || 560, H = opt.h || 360, m = { l: 54, r: 16, t: 34, b: 44 };
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opt.label }, host);
+    if (opt.title) el("text", { x: m.l, y: 18, "font-size": 14, "font-weight": 600 }, svg, opt.title);
+    const x = (val) => m.l + (val - opt.x0) / (opt.x1 - opt.x0) * (W - m.l - m.r);
+    const y = (val) => H - m.b - (val - opt.y0) / (opt.y1 - opt.y0) * (H - m.t - m.b);
+    for (const s of opt.spans || []) el("rect", { x: x(s[0]), y: m.t, width: Math.max(1, x(s[1]) - x(s[0])), height: H - m.t - m.b, fill: v("--crit"), opacity: 0.09 }, svg);
+    for (const t of opt.xt) { el("line", { x1: x(t), x2: x(t), y1: m.t, y2: H - m.b, class: "grid-line" }, svg); el("text", { x: x(t), y: H - m.b + 18, "text-anchor": "middle", "font-size": 11.5, class: "t-muted" }, svg, t); }
+    for (const t of opt.yt) { el("line", { x1: m.l, x2: W - m.r, y1: y(t), y2: y(t), class: "grid-line" }, svg); el("text", { x: m.l - 8, y: y(t) + 4, "text-anchor": "end", "font-size": 11.5, class: "t-muted" }, svg, t); }
+    el("text", { x: (m.l + W - m.r) / 2, y: H - 6, "text-anchor": "middle", "font-size": 12, class: "t-muted" }, svg, opt.xl);
+    el("text", { x: 14, y: (m.t + H - m.b) / 2, "text-anchor": "middle", "font-size": 12, class: "t-muted", transform: `rotate(-90 14 ${(m.t + H - m.b) / 2})` }, svg, opt.yl);
+    const clip = "c" + Math.random().toString(36).slice(2);
+    el("rect", { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b }, el("clipPath", { id: clip }, el("defs", {}, svg)));
+    const g = el("g", { "clip-path": `url(#${clip})` }, svg);
+    for (const s of opt.series) {
+      const col = s.color.startsWith("--") ? v(s.color) : s.color;
+      if (s.type === "dots") { for (const [a, b] of s.pts) el("circle", { cx: x(a), cy: y(b), r: s.r || 1.6, fill: col, opacity: s.opacity || 0.5 }, g); }
+      else el("polyline", { points: s.x.map((t, i) => `${x(t)},${y(s.y[i])}`).join(" "), fill: "none", stroke: col, "stroke-width": s.width || 2, "stroke-dasharray": s.dash || "", "stroke-linejoin": "round", "stroke-linecap": "round" }, g);
+    }
+  }
+  function legend(host, items) {
+    const cs = getComputedStyle(host);
+    host.innerHTML = items.map(([c, t, dash]) => { const col = c.startsWith("--") ? cs.getPropertyValue(c).trim() : c; return `<span><i style="background:${dash ? "none" : col};${dash ? "height:0;border-top:2px dashed " + col : ""}"></i>${t}</span>`; }).join("");
+  }
+  const E = R.envelope;
+  for (const j of ["hip", "knee"]) {
+    const series = [];
+    for (const [k, col, dash] of [["v546", "--fg", ""], ["v468", "--fg2", "6 4"], ["v400", "--crit", "2 4"]]) {
+      series.push({ x: E.w, y: E[k].hi, color: col, dash, width: 1.6 }); series.push({ x: E.w, y: E[k].lo, color: col, dash, width: 1.6 });
+    }
+    series.push({ type: "dots", pts: R.points[j].walk, color: "--sig", r: 1.6 });
+    series.push({ type: "dots", pts: R.points[j].sts, color: "--acc", r: 1.8 });
+    chart(document.getElementById("ts-" + j), { label: `${j} torque against speed`, title: j === "hip" ? "Hip" : "Knee", x0: -E.wmax, x1: E.wmax, y0: -160, y1: 160, xt: E.xt, yt: [-150, -100, -50, 0, 50, 100, 150], xl: "output speed, rad/s", yl: "output torque, N·m", series });
+  }
+  legend(document.getElementById("ts-legend"), [["--fg", "full battery, 54.6 V"], ["--fg2", "nominal, 46.8 V", 1], ["--crit", "empty, 40.0 V", 1], ["--sig", "walking"], ["--acc", "sit and stand"]]);
+  const A = R.antiwindup;
+  if (A && A.t) {
+    chart(document.getElementById("aw-err"), { label: "knee tracking error", title: "Knee tracking error", w: 560, h: 320, x0: A.t[0], x1: A.t[A.t.length - 1], y0: A.e_y[0], y1: A.e_y[1], xt: A.xt, yt: A.e_yt, xl: "time, s", yl: "error, degrees", spans: A.spans,
+      series: [{ x: A.t, y: A.e_naive, color: "--crit", width: 1.8 }, { x: A.t, y: A.e_aw, color: "--sig", width: 2.4 }] });
+    chart(document.getElementById("aw-int"), { label: "knee integrator state", title: "Integrator state", w: 560, h: 320, x0: A.t[0], x1: A.t[A.t.length - 1], y0: A.i_y[0], y1: A.i_y[1], xt: A.xt, yt: A.i_yt, xl: "time, s", yl: "N·m", spans: A.spans,
+      series: [{ x: A.t, y: A.i_naive, color: "--crit", width: 1.8 }, { x: A.t, y: A.i_aw, color: "--sig", width: 2.4 }] });
+    legend(document.getElementById("aw-legend"), [["--crit", "plain PID"], ["--sig", "with anti-windup"], ["rgba(227,0,0,0.25)", "a torque limit is active"]]);
+  }
+
+  // ---------------------------------------------------------------- 3D viewer
+  const host = document.getElementById("viewer");
+  const stateEl = document.getElementById("v-state"), angEl = document.getElementById("v-angles"), loadEl = document.getElementById("v-loading");
+  const NAMES = { SITTING: "Seated", STANDING_UP: "Standing up", STANDING: "Standing", WALKING: "Walking", STOPPING: "Stopping", SITTING_DOWN: "Sitting down", FAULT_HOLD: "Safe hold" };
+  if (!window.THREE || !THREE.GLTFLoader) { loadEl.textContent = "The 3D view needs WebGL. The renders under EXA‑100 show the same model."; return; }
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch (e) { loadEl.textContent = "WebGL is not available here. The renders under EXA‑100 show the same model."; return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  host.appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(28, 1, 0.05, 60);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.target.set(0, 0.72, 0); controls.minDistance = 1.2; controls.maxDistance = 7;
+  controls.enableZoom = false;   // the page scrolls normally until the user clicks into the model
+  renderer.domElement.addEventListener("pointerdown", () => { controls.enableZoom = true; });
+  host.addEventListener("pointerleave", () => { controls.enableZoom = false; });
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xb0b0b8, 0.85));
+  const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(2.5, 4, 2); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xdfe8ff, 0.8); rim.position.set(-3, 2.5, -2.5); scene.add(rim);
+  const shadowTex = (() => { const c = document.createElement("canvas"); c.width = c.height = 256; const x = c.getContext("2d"); const g = x.createRadialGradient(128, 128, 0, 128, 128, 128); g.addColorStop(0, "rgba(0,0,0,0.28)"); g.addColorStop(1, "rgba(0,0,0,0)"); x.fillStyle = g; x.fillRect(0, 0, 256, 256); return new THREE.CanvasTexture(c); })();
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 1.0), new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false }));
+  shadow.rotation.x = -Math.PI / 2; shadow.position.y = 0.001; scene.add(shadow);
+
+  const root = new THREE.Group(); root.rotation.x = -Math.PI / 2; scene.add(root);   // the model is Z-up
+  const segs = {}; for (const s of ["pelvis", "thigh_L", "thigh_R", "shank_L", "shank_R", "foot_L", "foot_R"]) { segs[s] = new THREE.Group(); root.add(segs[s]); }
+  const G = R.geometry;
+  const ghostMat = new THREE.MeshStandardMaterial({ color: 0x8e8e93, transparent: true, opacity: 0.2, roughness: 0.7, depthWrite: false });
+  const ghost = [];
+  function cap(r, len, seg, pos) { const m = new THREE.Mesh(new THREE.CapsuleGeometry(r, len, 6, 20), ghostMat); m.rotation.x = Math.PI / 2; m.position.set(...pos); segs[seg].add(m); ghost.push(m); }
+  cap(0.075, G.thigh_len - 0.12, "thigh_L", [0, G.hjc_y, -G.thigh_len / 2]); cap(0.075, G.thigh_len - 0.12, "thigh_R", [0, -G.hjc_y, -G.thigh_len / 2]);
+  cap(0.048, G.shank_len - 0.12, "shank_L", [0, G.hjc_y, -G.shank_len / 2 + 0.02]); cap(0.048, G.shank_len - 0.12, "shank_R", [0, -G.hjc_y, -G.shank_len / 2 + 0.02]);
+  const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.15, 0.32, 8, 24), ghostMat); torso.scale.set(0.72, 1, 1.12); torso.rotation.x = Math.PI / 2; torso.position.set(-0.01, 0, 0.26); segs.pelvis.add(torso); ghost.push(torso);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.1, 28, 18), ghostMat); head.scale.set(1, 0.82, 1.15); head.position.set(0.015, 0, 0.715); segs.pelvis.add(head); ghost.push(head);
+
+  function pose(f) {
+    const hx = f[0], hz = f[1], p = f[2];
+    segs.pelvis.position.set(hx, 0, hz); segs.pelvis.rotation.set(0, p, 0);
+    for (const [s, o] of [["L", 3], ["R", 6]]) {
+      const ft = f[o], fs = f[o + 1], pf = f[o + 2];
+      const kx = hx + G.thigh_len * Math.sin(ft), kz = hz - G.thigh_len * Math.cos(ft);
+      const ax = kx + G.shank_len * Math.sin(fs), az = kz - G.shank_len * Math.cos(fs);
+      segs["thigh_" + s].position.set(hx, 0, hz); segs["thigh_" + s].rotation.set(0, -ft, 0);
+      segs["shank_" + s].position.set(kx, 0, kz); segs["shank_" + s].rotation.set(0, -fs, 0);
+      segs["foot_" + s].position.set(ax, 0, az); segs["foot_" + s].rotation.set(0, -pf, 0);
+    }
+    shadow.position.x = hx + 0.05;
+  }
+  const N = P.frames.length, dt = P.dt;
+  let idx = 0, playing = false, last = 0;
+  const deg = (r) => Math.round(r * 180 / Math.PI);
+  function setFrame(i) {
+    idx = Math.max(0, Math.min(N - 1, i)); const f = P.frames[idx]; pose(f);
+    stateEl.textContent = NAMES[P.states[f[9]]] || P.states[f[9]];
+    angEl.textContent = `Hip ${deg(f[3] + f[2])}° · Knee ${deg(f[3] - f[4])}°`;
+    document.getElementById("v-time").textContent = (idx * dt).toFixed(1) + " s";
+    document.getElementById("v-scrub").value = Math.round(idx / (N - 1) * 1000);
+  }
+  function follow(snap) { const tx = P.frames[idx][0], d = snap ? tx - controls.target.x : (tx - controls.target.x) * 0.12; controls.target.x += d; camera.position.x += d; }
+  const views = { iso: [2.3, 1.45, 2.15], front: [3.3, 0.85, 0.0], side: [0.0, 0.85, 3.4], back: [-2.6, 1.4, -1.8] };
+  function setView(name) {
+    const [a, b, c] = views[name]; camera.position.set(controls.target.x + a, b, c); controls.update();
+    document.querySelectorAll("[data-view]").forEach((x) => x.setAttribute("aria-pressed", x.dataset.view === name));
+  }
+  function resize() { const w = host.clientWidth, h = host.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  new ResizeObserver(resize).observe(host);
+  new THREE.GLTFLoader().load("volition_web.glb", (gltf) => {
+    const nodes = []; gltf.scene.traverse((o) => { if (o.isMesh) nodes.push(o); });
+    for (const o of nodes) {
+      const [seg, mat] = (o.name || o.parent.name || "").split("__");
+      if (!segs[seg]) continue;
+      o.updateWorldMatrix(true, false);
+      const m = o.matrixWorld.clone(); segs[seg].add(o); o.matrix.copy(m); o.matrix.decompose(o.position, o.quaternion, o.scale);
+      if (o.material) { o.material.side = THREE.DoubleSide; if (mat === "led" || mat === "indicator") { o.material.emissive = new THREE.Color(mat === "led" ? 0x40c8ff : 0xff6a10); o.material.emissiveIntensity = 0.7; } }
+    }
+    loadEl.remove();
+    const stand = P.frames.findIndex((f) => P.states[f[9]] === "STANDING");
+    setFrame(stand > 0 ? stand : 0); follow(true); setView("iso");
+  }, undefined, () => { loadEl.textContent = "The model could not be loaded."; });
+  setFrame(0); resize(); setView("iso");
+  function loop(ts) {
+    requestAnimationFrame(loop);
+    if (playing) { if (!last) last = ts; const adv = Math.floor((ts - last) / 1000 / dt); if (adv > 0) { last += adv * dt * 1000; setFrame(idx + adv >= N ? 0 : idx + adv); } follow(false); }
+    controls.update(); renderer.render(scene, camera);
+  }
+  requestAnimationFrame(loop);
+  const playBtn = document.getElementById("v-play");
+  playBtn.addEventListener("click", () => { playing = !playing; last = 0; playBtn.setAttribute("aria-pressed", playing); playBtn.textContent = playing ? "❚❚" : "▶"; playBtn.setAttribute("aria-label", playing ? "Pause" : "Play simulation"); });
+  document.getElementById("v-scrub").addEventListener("input", (e) => { setFrame(Math.round(e.target.value / 1000 * (N - 1))); follow(true); });
+  const userBtn = document.getElementById("v-user");
+  userBtn.addEventListener("click", () => { const on = userBtn.getAttribute("aria-pressed") !== "true"; userBtn.setAttribute("aria-pressed", on); ghost.forEach((g) => (g.visible = on)); });
+  document.querySelectorAll("[data-view]").forEach((b) => b.addEventListener("click", () => setView(b.dataset.view)));
+})();
+</script>

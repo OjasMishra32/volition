@@ -1,0 +1,42 @@
+{
+  "case": "sit-to-stand, 85 kg user, battery OCV 41.6 V (low-voltage torque derate active)",
+  "joint": "knee_R",
+  "v_bus_range": [
+    38.97,
+    41.47
+  ],
+  "torque_limit_min_Nm": 60.0,
+  "naive_pid": {
+    "peak_error_deg": 1.7,
+    "max_lag_deg": 1.7,
+    "overshoot_deg": 1.69,
+    "settling_after_sts_s": 0.0,
+    "time_in_saturation_s": 0.748,
+    "integrator_peak_Nm": 73.1
+  },
+  "back_calculation": {
+    "peak_error_deg": 1.7,
+    "max_lag_deg": 1.7,
+    "overshoot_deg": 0.38,
+    "settling_after_sts_s": 0.0,
+    "time_in_saturation_s": 0.679,
+    "integrator_peak_Nm": 15.6
+  },
+  "hip_naive": {
+    "peak_error_deg": 1.96,
+    "max_lag_deg": 1.96,
+    "overshoot_deg": 0.77,
+    "settling_after_sts_s": 0.0,
+    "time_in_saturation_s": 0.269,
+    "integrator_peak_Nm": 32.5
+  },
+  "hip_back_calculation": {
+    "peak_error_deg": 1.96,
+    "max_lag_deg": 1.96,
+    "overshoot_deg": 0.21,
+    "settling_after_sts_s": 0.0,
+    "time_in_saturation_s": 0.25,
+    "integrator_peak_Nm": 9.8
+  },
+  "note": "Joint-level study without the supervisor; the bus dips below the 40 V forced-sit threshold under seat-off load, so the full system would abort to a guided sit."
+}
